@@ -8,6 +8,8 @@
 ;; functional related functions
 ;;
 
+(require 'seq)
+(require 'cl)
 
 ;;;###autoload
 (defsubst _compose (function &rest more-functions)
@@ -35,4 +37,3 @@
 ;;;###autoload
 (defmacro compose-and-call (fn-list arg)
   `(funcall (compose ,@fn-list) ,arg))
-
