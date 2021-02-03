@@ -21,7 +21,7 @@
              (system-fonts-dir "~/../Library/Fonts/")
              (spacemacs-ttfs (get-ttfs spacemacs-fonts-dir))
              (system-ttfs (get-ttfs system-fonts-dir))
-             (ttfs-to-be-copied (list-difference spacemacs-ttfs system-ttfs)))
+             (ttfs-to-be-copied (seq-difference spacemacs-ttfs system-ttfs)))
         (dolist (ttf ttfs-to-be-copied)
           (copy-file (concat spacemacs-fonts-dir ttf)
                      (concat system-fonts-dir ttf))))))
