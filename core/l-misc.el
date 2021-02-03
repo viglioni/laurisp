@@ -5,13 +5,12 @@
 ;;
 
 
+
+
 ;;
-;; Logic related functions
+;; Number related functions
 ;;
 
 ;;;###autoload
-(defun bool (x)
-  "returns nil/t"
-  (not (not x)))
-
+(defun inc (n) (+ 1 n))
 
