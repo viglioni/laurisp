@@ -54,7 +54,7 @@
 ;;   (interactive "sWhat do you want to import? \nfFrom? ")
 ;;   (let* ((path (remove-suffix (relative-path (buffer-file-name) file-name)))
 ;;          (imp (format "import %s from '%s';\n" component path)))
-;;     (insert-text-on-first-empty-line imp (point))))
+;;     (insert-on-fst-empty-line imp (point))))
 
 
 ;; (defun import-lib-js (component lib)
@@ -71,7 +71,7 @@
 ;;             (goto-char (inc (point)))
 ;;             (insert comp-imp)
 ;;             (goto-char (+ current-point (length comp-imp))))
-;;         (insert-text-on-first-empty-line full-imp current-point)))))
+;;         (insert-on-fst-empty-line full-imp current-point)))))
 
 
 ;; ;;
