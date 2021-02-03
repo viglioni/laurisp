@@ -1,4 +1,5 @@
-(load "./core/l-functional.el")
+(load "./test/helpers.el")
+(load-file "l-functional")
 
 (describe
  "#compose-and-call - these suits also cover indirectly #compose and #curry"
