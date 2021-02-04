@@ -71,18 +71,13 @@
    [a] → Boolean"
   (bool (seq-reduce
          (lambda (acc val) (or acc val))
-         lst t)))
-
+         lst nil)))
 
 ;;;###autoload
 (defun contains (list element)
-  "returns t/nil if element is in list"
+  "Returns t/nil if element is in list
+   [a] -> a -> bool"
   (bool (member element list)))
-
-;;;###autoload
-(defun not-contains (list element)
-  "returns t/nil if element is not in list"
-  (not (contains list element)))
 
 ;;;###autoload
 (defun head (list)
@@ -90,22 +85,39 @@
   (car list))
 
 ;;;###autoload
+(defun not-contains (list element)
+  "Returns t/nil if element is not in list
+   [a] -> a -> bool"
+  (not (contains list element)))
+
+;;;###autoload
 (defun tail (list)
   ""
   (cdr list))
 
-;;;###autoload
-(defun zip (&rest lists)
-  "zips n lists"
-  (apply (curry  mapcar* 'list) lists ))
 
 ;;;###autoload
-(defun unzip (zipped-list &optional acc)
+(defun unzip (zipped-list)
   "unzip n lists
    ((1 2 ... n) (1 2 ... n)) =>
    ((1 1 ... 1) (2 2 .... 2) ... (n n ... n)"
-  (if (all zipped-list)
+  (if (and zipped-list (all zipped-list))
       (let ((heads (mapcar* 'head zipped-list))
             (tails (mapcar* 'tail zipped-list)))
         (append (list heads) (unzip tails)))))
+
+;;;###autoload
+(defun zip (&rest lists)
+  "zips n lists"
+  (apply (curry  mapcar* 'list) lists))
+
+;;
+;; Number
+;;
+
+;;;###autoload
+(defun inc (n)
+  "Returns the increment of n
+   Number -> Number"
+(+ 1 n))
 
