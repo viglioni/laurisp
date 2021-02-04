@@ -34,6 +34,7 @@
 (import-files "core")
 (import-files "lazy-funcs")
 (import-files "config")
+(import-files "test")
 (load "~/laurisp/external/emacs-grammarly/emacs-grammarly.el")
 
 (provide 'laurisp)
