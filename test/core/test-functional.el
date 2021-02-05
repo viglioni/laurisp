@@ -6,14 +6,14 @@
 ;;
 
 (test-suit "#compose-and-call"
-  (context "the functions to be composed are simple"
-    (it-should "compose functions in the correct order"
+  (context "there are more than one arguments to be applied"
+    (it-should "compose functions in the correct order and apply args"
       (expect (compose-and-call
                ((+ 1)
-                (* 2 1)) 10))
-      :to-be 21))
+                (* 2 1)) 2 3))
+      :to-be 13))
   (context "functions are from seq lib"
-    (it-should "compose functions correctly"
+    (it-should "compose functions correctly and apply args"
       (let ((test-list '(1 2 3 4 5 6 7 8 9 10))
             (sum (lambda (lst) (seq-reduce '+ lst 0)))
             (expected 55))
@@ -24,7 +24,7 @@
                   (seq-filter (lambda (el) (> el 5)))) test-list)
                 :to-be expected))))
   (context "functions receive regex params" 
-    (it-should "properly compose functions"
+    (it-should "properly compose functions and apply args"
       (let ((regexp "foo")
             (str-replace "bar"))
         (expect (compose-and-call
