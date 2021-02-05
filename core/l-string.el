@@ -9,14 +9,19 @@
 ;;
 
 ;;;###autoload
-(defun join-path (path file)
+(defun join-path (path filename)
   "concat path and file. Adds '/' to the end of the path if necessary"
-  (concat path (if (string-match-p "/$" path) "" "/") file))
+  (if (n-and path filename)
+      (throw join-path "path or filename is nil")
+    (concat path (if (string-match-p "/$" path) "" "/") filename)))
+
 
 ;;;###autoload
 (defun file-extension (filename extension)
   "returns filename.extension"
-  (concat filename "." extension))
+  (if (n-and filename extension)
+      (throw file-extension "filename or extension is nil")
+    (concat filename "." extension)))
 
 ;;;###autoload
 (defun regex-matches (regexp string &optional pos matches)
