@@ -5,30 +5,31 @@
 ;; Functions
 ;;
 
-(test-suit "#compose-and-call - these suits also cover indirectly #compose and #curry"
-  (it-should "compose functions in the correct order"
-    (expect (compose-and-call
-             ((+ 1)
-              (* 2)) 10))
-    :to-be 21)
-
-  (it-should "compose seq functions correctly"
-    (let ((test-list '(1 2 3 4 5 6 7 8 9 10))
-          (sum (lambda (lst) (seq-reduce '+ lst 0)))
-          (expected 55))
+(test-suit "#compose-and-call"
+  (context "the functions to be composed are simple"
+    (it-should "compose functions in the correct order"
       (expect (compose-and-call
-               ((funcall sum)
-                (seq-concatenate 'list '(1 2 3 4))
-                (seq-map (lambda (x) (+ 1 x)))
-                (seq-filter (lambda (el) (> el 5)))) test-list)
-              :to-be expected)))
-
-  (it-should "properly compose functions with regex params"
-    (let ((regexp "foo")
-          (str-replace "bar"))
-      (expect (compose-and-call
-               ((replace-regexp-in-string regexp str-replace))
-               "foo bar") :to-equal "bar bar"))))
+               ((+ 1)
+                (* 2 1)) 10))
+      :to-be 21))
+  (context "functions are from seq lib"
+    (it-should "compose functions correctly"
+      (let ((test-list '(1 2 3 4 5 6 7 8 9 10))
+            (sum (lambda (lst) (seq-reduce '+ lst 0)))
+            (expected 55))
+        (expect (compose-and-call
+                 ((funcall sum)
+                  (seq-concatenate 'list '(1 2 3 4))
+                  (seq-map (lambda (x) (+ 1 x)))
+                  (seq-filter (lambda (el) (> el 5)))) test-list)
+                :to-be expected))))
+  (context "functions receive regex params" 
+    (it-should "properly compose functions"
+      (let ((regexp "foo")
+            (str-replace "bar"))
+        (expect (compose-and-call
+                 ((replace-regexp-in-string regexp str-replace))
+                 "foo bar") :to-equal "bar bar")))))
 
 (test-suit "#thread-last ->"
   (it-should "pipe functions in the correct order"
@@ -44,60 +45,79 @@
      :to-equal 21)))
 
 (test-suit "#curry"
-  (it-should "curry correctly when there are several arguments"
-    (expect
-     (funcall (curry + 1 2 3 4 5) 6 7 8 9 10)
-     :to-be 55)))
+  (context "there are several arguments"
+    (it-should "curry correctly"
+      (expect
+       (funcall (curry + 1 2 3 4 5) 6 7 8 9 10)
+       :to-be 55))))
 
 ;;
 ;; List
 ;;
 
 (test-suit "#all"
-  (it-should "return nil if the list has at least one nil entry"
-    (expect (all '(1 2 3 nil 4)) :to-be nil)
-    (expect (all '(nil nil nil)) :to-be nil)
-    (expect (all '("asd" nil 1 nil)) :to-be nil))
-  (it-should "return t if all entries are truthy"
-    (expect (all '(1 "ase" '(nil) '())) :to-be t)))
+  (context "list has at least one nil entry"
+    (it-should "return nil"
+      (expect (all '(1 2 3 nil 4)) :to-be nil)
+      (expect (all '(nil nil nil)) :to-be nil)
+      (expect (all '("asd" nil 1 nil)) :to-be nil)))
+  (context "all entries are truthy"
+    (it-should "return t"
+      (expect (all '(1 "ase" '(nil) '())) :to-be t))))
 
 (test-suit "#any"
-  (it-should "return t if the list has at least one truthy entry"
-    (expect (any '(1 2 3 nil 4)) :to-be t)
-    (expect (any '(nil nil nil 1)) :to-be t)
-    (expect (any '("asd" nil 1 nil)) :to-be t))
-  (it-should "return nil if all entries are nil"
-    (expect (any '(nil nil nil)) :to-be nil)))
+  (context "list has at least one truthy entry"
+    (it-should "return t"
+      (expect (any '(1 2 3 nil 4)) :to-be t)
+      (expect (any '(nil nil nil 1)) :to-be t)
+      (expect (any '("asd" nil 1 nil)) :to-be t)))
+  (context "all entries are nil"
+    (it-should "return nil"
+      (expect (any '(nil nil nil)) :to-be nil))))
 
 (test-suit "#contains"
-  (it-should "return t if element is in the list"
-    (expect (contains '(1 2 3) 1) :to-be t))
-  (it-should "return nil if element is not in the list"
-    (expect (contains '(1 2 3) 4) :to-be nil)))
+  (context "list is nil"
+    (it-should "return nil"
+      (expect (contains nil 2) :to-be nil)))
+  (context "element is in the list"
+    (it-should "return t"
+      (expect (contains '(1 2 3) 1) :to-be t)))
+  (context "element is not in the list"
+    (it-should "return nil"
+      (expect (contains '(1 2 3) 4) :to-be nil))))
 
 (test-suit "#head"
-  (it-should "return the first element when the list is not empty"
-    (expect (head '(1 2 3)) :to-be 1)
-    (expect (head '(1)) :to-be 1))
-  (it-should "return nil if the list is empty"
-    (expect (head '()) :to-be nil)
-    (expect (head nil) :to-be nil)))
+  (context "list is not empty"
+    (it-should "return the first element"
+      (expect (head '(1 2 3)) :to-be 1)
+      (expect (head '(1)) :to-be 1)))
+  (context "list is empty"
+    (it-should "return nil"
+      (expect (head '()) :to-be nil)
+      (expect (head nil) :to-be nil))))
 
 (test-suit "#not-contains"
-  (it-should "return nil if element is in the list"
-    (expect (not-contains '(1 2 3) 1) :to-be nil))
-  (it-should "return t if element is not in the list"
-    (expect (not-contains '(1 2 3) 4) :to-be t)))
+  (context "list is nil"
+    (it-should "return nil"
+      (expect (not-contains nil 2) :to-be nil)))
+  (context "element is not in the list"
+    (it-should "return t"
+      (expect (not-contains '(1 2 3) 4) :to-be t)))
+  (context "element is in the list"
+    (it-should "return nil"
+      (expect (not-contains '(1 2 3) 3) :to-be nil))))
 
 (test-suit "#tail"
-  (it-should "return nil if there is one elment"
-    (expect (tail '(1)) :to-be nil))
-  (it-should "return nil if list is empty"
-    (expect (tail '()) :to-be nil))
-  (it-should "return nil if list is nil"
-    (expect (tail nil) :to-be nil))
-  (it-should "return the (n-1)th elements of a list"
-    (expect (tail '(1 2 3 4)) :to-equal '(2 3 4))))
+  (context "list is empty"
+    (it-should "return nil"
+      (expect (tail '()) :to-be nil)
+      (expect (tail nil) :to-be nil)))
+  (context "there is one elment"
+    (it-should "return nil"
+      (expect (tail '(1)) :to-be nil)))
+  (context "list has at least two elements"
+    (it-should "return the (n-1)th elements of a list"
+      (expect (tail '(1 2 3 4)) :to-equal '(2 3 4)))))
 
 (test-suit "#unzip"
   (context "list or sublists are empty"

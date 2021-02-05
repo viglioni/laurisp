@@ -88,13 +88,12 @@
 (defun not-contains (list element)
   "Returns t/nil if element is not in list
    [a] -> a -> bool"
-  (not (contains list element)))
+  (if list (not (contains list element))))
 
 ;;;###autoload
 (defun tail (list)
   ""
   (cdr list))
-
 
 ;;;###autoload
 (defun unzip (zipped-list)
