@@ -38,9 +38,9 @@
 ;;;###autoload
 (defun insert-spotify-buffer-content (buffer-name status vol)
   (let ((inhibit-read-only t)
-        (status-formatted (compose
-                           '('(replace-regexp-in-string "Artist" "\nArtist")
-                              '(replace-regexp-in-string "Position: .*\n" ""))
+        (status-formatted (compose-and-call
+                           ((replace-regexp-in-string "Artist" "\nArtist")
+                            (replace-regexp-in-string "Position: .*\n" ""))
                            status)))
     (with-current-buffer
         buffer-name
