@@ -75,6 +75,18 @@
    a -> bool"
   (not (not x)))
 
+;;;###autoload
+(defun n-and (&rest args)
+  "Not and.
+   * -> bool"
+  (not (all args)))
+
+;;;###autoload
+(defun n-or (&rest args)
+  "Not or.
+   * -> bool"
+  (not (any args)))
+
 ;;
 ;; List 
 ;;

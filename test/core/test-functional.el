@@ -52,6 +52,28 @@
        :to-be 55))))
 
 ;;
+;; Logic
+;;
+
+(test-suit "#n-and"
+  (context "all truthy vals"
+    (it-should "return nil"
+      (expect (n-and 1 2 3 t '(1)) :to-be nil)))
+  (context "at least one falsey element"
+    (it-should "should return true"
+      (expect (n-and 1 2 nil) :to-be t)
+      (expect (n-and nil nil) :to-be t))))
+
+(test-suit "#n-or"
+  (context "all falsey vals"
+    (it-should "return t"
+      (expect (n-or nil nil) :to-be t)))
+  (context "at least one truthy element"
+    (it-should "should return nil"
+      (expect (n-or 1 2 nil) :to-be nil)
+      (expect (n-or 1 2) :to-be nil))))
+
+;;
 ;; List
 ;;
 
