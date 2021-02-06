@@ -1,7 +1,7 @@
 (load "./test/l-test-helpers.el")
 (load-test-file "l-general")
 
-(test-suit "#throw-if"
+(test-suite "#throw-if"
   (context "condition is truthy"
     (it-should "throw error with correct message"
       (expect (throw-if t "message") :to-throw 'error '("message"))

@@ -2,7 +2,7 @@
 (load "./test/l-test-helpers.el")
 (load-test-file "l-string")
 
-(test-suit "#join-path"
+(test-suite "#join-path"
   (context "path ends in /"
     (it-should "should join without a bar between path and filename"
       (expect (join-path "/path/to/" "file.lau")
@@ -20,7 +20,7 @@
       (expect (join-path nil nil)
               :to-throw))))
 
-(test-suit "#file-extension"
+(test-suite "#file-extension"
   (context "filename or extension is nil"
     (it-should "throw error"
       (expect (file-extension nil "lau")
@@ -33,7 +33,7 @@
     (it-should "concatenate filename with extension"
       (expect (file-extension "file" "lau") :to-equal "file.lau"))))
 
-(test-suit "#regex-matches"
+(test-suite "#regex-matches"
   (context "there are several matches in string"
     (it-should "return all of them in the correct order"
       (let ((string "match1 asdasdasda match2 adasdas match3 asd")
@@ -50,7 +50,7 @@
       (expect (regex-matches nil "string") :to-throw)
       (expect (regex-matches nil nil) :to-throw))))
 
-(test-suit "#get-string-from-file"
+(test-suite "#get-string-from-file"
   (context "param is nil or do not exist"
     (it-should "throw error"
       (expect (get-string-from-file nil) :to-throw)
@@ -64,7 +64,7 @@
       (expect (get-string-from-file "filepath")
               :to-equal "string"))))
 
-(test-suit "#remove-suffix"
+(test-suite "#remove-suffix"
   (context "param is nil"
     (it-should "throw error"
       (expect (remove-suffix) :to-throw )))
@@ -75,7 +75,7 @@
     (it-should "return param"
       (expect (remove-suffix "file") :to-equal "file"))))
 
-(test-suit "#insert-on-fst-empty-line"
+(test-suite "#insert-on-fst-empty-line"
   (context "any param is nil"
     (it-should "throw error"
       (expect (insert-on-fst-empty-line) :to-throw )

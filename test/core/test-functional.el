@@ -5,7 +5,7 @@
 ;; Functions
 ;;
 
-(test-suit "#compose-and-call"
+(test-suite "#compose-and-call"
   (context "there are more than one arguments to be applied"
     (it-should "compose functions in the correct order and apply args"
       (expect (compose-and-call
@@ -31,20 +31,20 @@
                  ((replace-regexp-in-string regexp str-replace))
                  "foo bar") :to-equal "bar bar")))))
 
-(test-suit "#thread-last ->"
+(test-suite "#thread-last ->"
   (it-should "pipe functions in the correct order"
     (expect (-> 10
                ((+ 1)
                 (* 2)))
             :to-be 22)))
 
-(test-suit "#compose"
+(test-suite "#compose"
   (it-should "compose in the correct order"
     (expect
      (funcall  (compose (+ 1) (* 2)) 10)
      :to-equal 21)))
 
-(test-suit "#curry"
+(test-suite "#curry"
   (context "there are several arguments"
     (it-should "curry correctly"
       (expect
@@ -55,7 +55,7 @@
 ;; Logic
 ;;
 
-(test-suit "#n-and"
+(test-suite "#n-and"
   (context "all truthy vals"
     (it-should "return nil"
       (expect (n-and 1 2 3 t '(1)) :to-be nil)))
@@ -64,7 +64,7 @@
       (expect (n-and 1 2 nil) :to-be t)
       (expect (n-and nil nil) :to-be t))))
 
-(test-suit "#n-or"
+(test-suite "#n-or"
   (context "all falsey vals"
     (it-should "return t"
       (expect (n-or nil nil) :to-be t)))
@@ -77,7 +77,7 @@
 ;; List
 ;;
 
-(test-suit "#all"
+(test-suite "#all"
   (context "list has at least one nil entry"
     (it-should "return nil"
       (expect (all '(1 2 3 nil 4)) :to-be nil)
@@ -87,7 +87,7 @@
     (it-should "return t"
       (expect (all '(1 "ase" '(nil) '())) :to-be t))))
 
-(test-suit "#any"
+(test-suite "#any"
   (context "list has at least one truthy entry"
     (it-should "return t"
       (expect (any '(1 2 3 nil 4)) :to-be t)
@@ -97,7 +97,7 @@
     (it-should "return nil"
       (expect (any '(nil nil nil)) :to-be nil))))
 
-(test-suit "#contains?"
+(test-suite "#contains?"
   (context "list is nil"
     (it-should "return nil"
       (expect (contains? nil 2) :to-be nil)))
@@ -108,7 +108,7 @@
     (it-should "return nil"
       (expect (contains? '(1 2 3) 4) :to-be nil))))
 
-(test-suit "#head"
+(test-suite "#head"
   (context "list is not empty"
     (it-should "return the first element"
       (expect (head '(1 2 3)) :to-be 1)
@@ -118,7 +118,7 @@
       (expect (head '()) :to-be nil)
       (expect (head nil) :to-be nil))))
 
-(test-suit "#not-contains?"
+(test-suite "#not-contains?"
   (context "list is nil"
     (it-should "return nil"
       (expect (not-contains? nil 2) :to-be nil)))
@@ -129,7 +129,7 @@
     (it-should "return nil"
       (expect (not-contains? '(1 2 3) 3) :to-be nil))))
 
-(test-suit "#tail"
+(test-suite "#tail"
   (context "list is empty"
     (it-should "return nil"
       (expect (tail '()) :to-be nil)
@@ -141,7 +141,7 @@
     (it-should "return the (n-1)th elements of a list"
       (expect (tail '(1 2 3 4)) :to-equal '(2 3 4)))))
 
-(test-suit "#unzip"
+(test-suite "#unzip"
   (context "list or sublists are empty"
     (it-should "return nil"
       (expect (unzip nil) :to-be nil)
@@ -154,7 +154,7 @@
     (it-should "unzip properly"
       (expect (unzip '((1 2 3) (1 2 3))) :to-equal '((1 1) (2 2) (3 3))))))
 
-(test-suit "#zip"
+(test-suite "#zip"
   (context "all lists are empty"
     (it-should "return one empty list"
       (expect (zip nil nil nil) :to-be nil)
@@ -176,7 +176,7 @@
 ;; Number
 ;;
 
-(test-suit "#inc"
+(test-suite "#inc"
   (context "number is integer"
     (it-should "increment number"
       (expect (inc 1) :to-be 2)
@@ -191,7 +191,7 @@
 ;; Types
 ;;
 
-(test-suit "#any-nil?"
+(test-suite "#any-nil?"
   (context "all truthy vals"
     (it-should "return nil"
     (expect (any-nil? 1 2 3 t '(1)) :to-be nil)))
@@ -200,7 +200,7 @@
       (expect (any-nil? 1 2 nil) :to-be t)
       (expect (any-nil? nil nil) :to-be t))))
 
-(test-suit "#all-nil?"
+(test-suite "#all-nil?"
   (context "all falsey vals"
     (it-should "return t"
       (expect (all-nil? nil nil) :to-be t)))

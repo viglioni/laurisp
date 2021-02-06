@@ -5,7 +5,7 @@
           (directory-files-recursively "." (concat file-name ".el"))))
 
 ;;;###autoload
-(defmacro test-suit (description &rest body)
+(defmacro test-suite (description &rest body)
   "the same as describe, but with defun indentation"
   (declare (indent defun))
   `(describe ,description
