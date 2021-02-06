@@ -25,4 +25,4 @@
   `(it (concat "should " ,description)
        ,@body))
 
-
+(add-to-list 'load-path "./core")
