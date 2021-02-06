@@ -97,16 +97,16 @@
     (it-should "return nil"
       (expect (any '(nil nil nil)) :to-be nil))))
 
-(test-suit "#contains"
+(test-suit "#contains?"
   (context "list is nil"
     (it-should "return nil"
-      (expect (contains nil 2) :to-be nil)))
+      (expect (contains? nil 2) :to-be nil)))
   (context "element is in the list"
     (it-should "return t"
-      (expect (contains '(1 2 3) 1) :to-be t)))
+      (expect (contains? '(1 2 3) 1) :to-be t)))
   (context "element is not in the list"
     (it-should "return nil"
-      (expect (contains '(1 2 3) 4) :to-be nil))))
+      (expect (contains? '(1 2 3) 4) :to-be nil))))
 
 (test-suit "#head"
   (context "list is not empty"
@@ -118,16 +118,16 @@
       (expect (head '()) :to-be nil)
       (expect (head nil) :to-be nil))))
 
-(test-suit "#not-contains"
+(test-suit "#not-contains?"
   (context "list is nil"
     (it-should "return nil"
-      (expect (not-contains nil 2) :to-be nil)))
+      (expect (not-contains? nil 2) :to-be nil)))
   (context "element is not in the list"
     (it-should "return t"
-      (expect (not-contains '(1 2 3) 4) :to-be t)))
+      (expect (not-contains? '(1 2 3) 4) :to-be t)))
   (context "element is in the list"
     (it-should "return nil"
-      (expect (not-contains '(1 2 3) 3) :to-be nil))))
+      (expect (not-contains? '(1 2 3) 3) :to-be nil))))
 
 (test-suit "#tail"
   (context "list is empty"
@@ -186,4 +186,26 @@
     (it-should "increment number"
       (expect (inc 1.1) :to-equal 2.1))))
 
+
+;;
+;; Types
+;;
+
+(test-suit "#any-nil?"
+  (context "all truthy vals"
+    (it-should "return nil"
+    (expect (any-nil? 1 2 3 t '(1)) :to-be nil)))
+  (context "at least one falsey element"
+    (it-should "should return true"
+      (expect (any-nil? 1 2 nil) :to-be t)
+      (expect (any-nil? nil nil) :to-be t))))
+
+(test-suit "#all-nil?"
+  (context "all falsey vals"
+    (it-should "return t"
+      (expect (all-nil? nil nil) :to-be t)))
+  (context "at least one truthy element"
+    (it-should "should return nil"
+      (expect (all-nil? 1 2 nil) :to-be nil)
+      (expect (all-nil? 1 2) :to-be nil))))
 

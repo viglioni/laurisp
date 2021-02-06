@@ -108,7 +108,7 @@
          lst nil)))
 
 ;;;###autoload
-(defun contains (list element)
+(defun contains? (list element)
   "Returns t/nil if element is in list
    ([a] a) -> bool"
   (bool (member element list)))
@@ -120,10 +120,10 @@
   (car list))
 
 ;;;###autoload
-(defun not-contains (list element)
+(defun not-contains? (list element)
   "Returns t/nil if element is not in list
    ([a] a) -> bool"
-  (if list (not (contains list element))))
+  (if list (not (contains? list element))))
 
 ;;;###autoload
 (defun tail (list)
@@ -160,4 +160,24 @@
   "Returns the increment of n
    Number -> Number"
 (+ 1 n))
+
+;;
+;; Type
+;;
+
+;;;###autoload
+(defun all-nil? (&rest args)
+  "return if all args are nil
+   (* ... *) -> boolean
+   e.g (all-nil? nil nil) -> t"
+  (apply 'n-or args))
+
+(defun any-nil? (&rest args)
+  "return if any args are nil
+   (* ... *) -> boolean
+   e.g (any-nil? nil t nil) -> t"
+  (apply 'n-and args))
+
+
+(provide 'l-functional)
 

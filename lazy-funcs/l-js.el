@@ -92,7 +92,7 @@
 ;;          (eslint (join-path root "node_modules/.bin/eslint"))
 ;;          (file (buffer-file-name))
 ;;          (linter (format "%s %s --fix" eslint file)))
-;;     (when (and (contains modes major-mode) (file-executable-p eslint))
+;;     (when (and (contains? modes major-mode) (file-executable-p eslint))
 ;;       (shell-command linter))))
 
 ;; ;(add-hook 'after-save-hook #'run-lint-on-save)
