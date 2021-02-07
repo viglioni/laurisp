@@ -174,7 +174,7 @@
      ((replace-regexp-in-string "@[a-zA-Z]*\{" "")
       (replace-regexp-in-string "," "" ))))
 
-(setq libf "/Users/laura.viglioni/Personal/mestrado/eqm-text/bibliography/library.bib")
+(setq libf "/Users/laura.viglioni/Personal/mestrado/eqm-text/bibliography/ic-tese-v3.bib")
 
 (defun lautex--bib-citations (file-path)
   "get all citations from a given file"
@@ -186,48 +186,66 @@
 (defun lautex--bib-info (line)
   "get info from a bib line"
   (-> line
-     ((replace-regexp-in-string "[a-z]* = \{*" "")
+     ((replace-regexp-in-string "[a-z]* ?= ?\{*" "")
       (replace-regexp-in-string "\}.*" ""))))
 
 ;;;###autoload
 (defun lautex--bib-titles (file)
-  (let* ((file-content (string-from-file file))
-         (titles (regex-matches "title = .*" file-content)))
+  (let* ((file-content (get-string-from-file file))
+         (titles (regex-matches "title ?=.*" file-content)))
     (seq-map 'lautex--bib-info titles)))
+(lautex--bib-titles libf)
 
 ;;;###autoload
-(defun lautex--bib-years (file)
-  (let* ((file-content (string-from-file file))
-         (titles (regex-matches "year = .*" file-content)))
-    (seq-map 'lautex--bib-info titles)))
+(defun lautex--bib-authors (file)
+  (let* ((file-content (get-string-from-file file))
+         (authors (regex-matches "author ?=.*" file-content)))
+    (seq-map 'lautex--bib-info authors)))
+
+
+;;;###autoload
+(defun lautex--bib-year (file)
+  (let* ((file-content (get-string-from-file file))
+         (year (regex-matches "year ?=.*" file-content)))
+    (seq-map 'lautex--bib-info year)))
 
 
 ;;;###autoload
 (defun lautex--form-candidates (file)
   (let ((citations (lautex--bib-citations file))
         (titles (lautex--bib-titles file))
-        (years (lautex--bib-years file)))
+        (years (lautex--bib-year file))
+        (authors (lautex--bib-authors file)))
     (mapcar*
-     (lambda (yea tit cit) (cons (format "(%s) %s" yea tit) cit))
-     years titles citations)))
+         (lambda (yea tit aut cit) (cons (format "(%s) %s\n%s" yea tit aut) cit))
+        years titles authors citations)))
+
+
+;; todo remove from here
+;;;###autoload
+(defun sort-alist-by-car (alist)
+  (sort alist (lambda (a b) (string< (car a) (car b)))))
 
 ;;;###autoload
 (defun lautex--citation-candidates ()
   "get all citation candidates of all bib files"
   (-> (lautex--get-bib-files)
      ((seq-map 'lautex--form-candidates)
-      (apply 'append))))
-
+      (apply 'append)
+      (sort-alist-by-car))))
 
 ;;;###autoload
 (defun lautex--helm-citation-source ()
   (helm-build-sync-source "Label Source"
+    :volatile t
+    :multiline t
     :candidates (lautex--citation-candidates)
     :action 'lautex--insert-citation))
 
 ;;;###autoload
 (defun LauTeX-insert-citation ()
   (interactive)
-  (helm :sources (lautex--helm-citation-source)
+  (helm :prompt "Choose a source to cite: "
+        :sources (lautex--helm-citation-source)
         :buffer "*helm buffer source*"))
 
