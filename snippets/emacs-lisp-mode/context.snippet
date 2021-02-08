@@ -3,6 +3,6 @@
 # key: con
 # --
 
-(context "$2"
-         (it-should "$3"
-                    (expect $4)))
+(context "$1"
+         ${2::var (($3))}${4:(before-each $5)}$6(it-should "$7"
+         (expect ${8:($9)} :$10 $11)$12))$0
