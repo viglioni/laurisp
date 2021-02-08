@@ -70,25 +70,6 @@
     (goto-char return-pos)
     t))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ;;;###autoload
 ;; (defun relative-path (file1 file2)
 ;;   "TEMPORARIALLY DEPRECATED"
@@ -105,3 +86,4 @@
 ;;          (relative-path (join-path path1 path2)))
 ;;     relative-path))
 
+(provide 'l-string)

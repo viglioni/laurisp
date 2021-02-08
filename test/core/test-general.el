@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 (load "./test/l-test-helpers.el")
 (load-test-file "l-general")
 
