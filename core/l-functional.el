@@ -15,33 +15,33 @@
 ;; Function
 ;;
 
-;;;###autoload
-(defsubst _compose (function &rest more-functions)
-  "helper function to #compose"
-  (cl-reduce (lambda (f g)
-               (lexical-let ((f f) (g g))
-                 (lambda (&rest arguments)
-                   (funcall f (apply g arguments)))))
-             more-functions
-             :initial-value function))
+(defmacro curry-expr (expr)
+  "Curries an expression
+   e.g. (curry-expr '(+ 1 2 3)) -> (curry + 1 2 3)"
+  `(eval (seq-concatenate 'list '(curry) ,expr)))
 
-;;;###autoload
-(defmacro curry (fn &rest initial-args)
-  "Returns the curried function.
-   ((* -> x) arg1, ..., argN) -> ((argN+1, ..., argM) -> a)
-   e.g.:
-   (curry + 1 2 3) -> (lambda (argN ... argM) (+ 1 2 3 argN ... argM))"
-  `(lambda (&rest args)
-     (apply (quote ,fn) (seq-concatenate 'list (list ,@initial-args) args))))
-
-;;;###autoload
 (defmacro compose (&rest fn-list)
   "Compose functions (and curries them) from right to left.
    ((y -> z) ... (m -> o) ((a ... n) -> m) ) -> ((a ... n)->z)
    e.g.:
    (compose (+ 1) (* 2)) -> (lambda (arg1 ... argN) (+ 1 (* 2 arg1 ... argN)))"
-  `(let ((curried-fn (quote ,(seq-map (lambda (x) (seq-concatenate 'list '(curry) x)) fn-list))))
-      (eval (seq-concatenate 'list '(_compose) curried-fn))))
+  `(let ((curried-fn (quote ,(seq-map (lambda (fn) (curry-expr fn)) fn-list))))
+     (reduce
+      (lambda (f g)
+        (lexical-let ((f f) (g g))
+          (lambda (&rest args) (funcall f (apply g args)))))
+      curried-fn
+      :initial-value (curry identity))))
+
+
+;;;###autoload
+(defmacro curry (fn &rest initial-args)
+  "Returns the curried function.
+   ((* -> x) arg1, ..., argN) -> ((argN+1, ..., argM) -> x)
+   e.g.:
+   (curry + 1 2 3) -> (lambda (argN ... argM) (+ 1 2 3 argN ... argM))"
+  `(lambda (&rest args)
+     (apply (quote ,fn) (seq-concatenate 'list (list ,@initial-args) args))))
 
 ;;;###autoload
 (defmacro -> (arg fn-list)
