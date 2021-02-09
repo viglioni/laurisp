@@ -22,6 +22,7 @@
     ;; format 
     (spacemacs/set-leader-keys-for-major-mode 'typescript-mode "ff" 'tide-fix)
     (spacemacs/set-leader-keys-for-major-mode 'typescript-mode "fo" 'tide-organize-imports)
+    (spacemacs/set-leader-keys-for-major-mode 'typescript-mode "fi" 'import-js-libs)
     (spacemacs/set-leader-keys-for-major-mode 'typescript-mode "f=" 'tide-format)
     (spacemacs/set-leader-keys-for-major-mode 'typescript-mode "fr" 'tide-refactor)
     ;; rename
@@ -39,6 +40,7 @@
     ;; format 
     (spacemacs/set-leader-keys-for-major-mode 'rjsx-mode "ff" 'tide-fix)
     (spacemacs/set-leader-keys-for-major-mode 'rjsx-mode "fo" 'tide-organize-imports)
+    (spacemacs/set-leader-keys-for-major-mode 'rjsx-mode "fi" 'import-js-libs)
     (spacemacs/set-leader-keys-for-major-mode 'rjsx-mode "f=" 'tide-format)
     (spacemacs/set-leader-keys-for-major-mode 'rjsx-mode "fr" 'tide-refactor)
     ;; rename
@@ -56,6 +58,7 @@
     ;; format 
     (spacemacs/set-leader-keys-for-major-mode 'web-mode "ff" 'tide-fix)
     (spacemacs/set-leader-keys-for-major-mode 'web-mode "fo" 'tide-organize-imports)
+    (spacemacs/set-leader-keys-for-major-mode 'web-mode "fi" 'import-js-libs)
     (spacemacs/set-leader-keys-for-major-mode 'web-mode "f=" 'tide-format)
     (spacemacs/set-leader-keys-for-major-mode 'web-mode "fr" 'tide-refactor)
     ;; rename
