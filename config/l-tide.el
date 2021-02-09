@@ -10,6 +10,11 @@
 
 
 
+;; make tide import with relative paths
+(eval-after-load "tide"
+  (lambda ()
+    (plist-put tide-user-preferences :importModuleSpecifierPreference "relative" )))
+
 ;;
 ;; Keybinds inside tide-mode
 ;;
