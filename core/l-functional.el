@@ -179,5 +179,15 @@
   (apply 'n-and args))
 
 
+;;
+;; alist
+;;
+;TODO: test it
+;;;###autoload
+(defun alist-sort-by-car (alist)
+  (sort alist (lambda (a b) (string< (car a) (car b)))))
+
+
+
 (provide 'l-functional)
 
