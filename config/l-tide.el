@@ -4,6 +4,8 @@
 ;; GNU Public License 3.0
 ;;
 
+;; (require 'l-tide-funcs)
+
 ;;
 ;; tide related functions
 ;;
@@ -110,3 +112,7 @@
 
 
 
+;;
+;; Use typescript-mode in TSX files
+;;
+(add-to-list 'auto-mode-alist '("\\.tsx$" . typescript-mode))
