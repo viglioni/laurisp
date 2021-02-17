@@ -25,7 +25,7 @@
   (let* ((path (concat "~/laurisp/" dir))
          (all-files (directory-files path t "^l-[a-z\\-].*\\.el$"))
          (loaded-files (mapcar (lambda (laurisp-file)
-                                 (load laurisp-file t t))
+                                 (load laurisp-file))
                                all-files)))
     (if (seq-reduce (lambda (acc val) (and acc val)) loaded-files t)
         "laurisp files loaded!"
@@ -35,6 +35,7 @@
 (import-files "lazy-funcs")
 (import-files "config")
 (import-files "test")
+(import-files "../.private")
 (load "~/laurisp/external/emacs-grammarly/emacs-grammarly.el")
 
 (provide 'laurisp)
