@@ -15,7 +15,7 @@
   (lambda ()
     (progn
       (add-hook 'slack-mode-hook 'emojify-mode)
-      (load-file "~/.private/slack-config.el")
+      (slack-load-info)
       )))
 
 
