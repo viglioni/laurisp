@@ -28,6 +28,8 @@
 (eval-after-load "org"
   (lambda ()
     (progn
+      ;; disable fullpage preview
+      (add-to-list 'org-latex-packages-alist '("" "fullpage" nil))
       ;; disable line count in presentation mode :)
       (add-hook 'epresent-mode-hook (lambda () (linum-mode 0)))
       ;; highlight latex
