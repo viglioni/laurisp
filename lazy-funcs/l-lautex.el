@@ -9,11 +9,6 @@
 ;;
 
 (require 'helm)
-(require 'projectile)
-(require 'l-functional)
-(require 'l-general)
-(require 'l-shell)
-(require 'l-string)
 
 ;;
 ;; common functions
@@ -280,4 +275,4 @@
         :buffer "*helm buffer source*"))
 
 
-(provide 'l-lautex)
+
