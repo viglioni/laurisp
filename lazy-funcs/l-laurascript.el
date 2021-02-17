@@ -91,7 +91,7 @@
   (if (get-buffer laurascript--error-buffer)
       (kill-buffer laurascript--error-buffer)))
 
-
+;;;###autoload
 (defun laurascript--config-error-buffer (msg)
   (let* ((max-text-width 100)
          (total-margin (- (window-text-width) max-text-width))
