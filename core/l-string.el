@@ -27,11 +27,12 @@
 (defun regex-matches (regexp string &optional pos matches)
   "Returns a list of matches"
   (throw-if (any-nil? regexp string) "regexp or string is nil")
-  (let* ((actual-pos (or pos 0))
-         (m-pos (string-match regexp string actual-pos))
-         (match (and m-pos (match-string 0 string))))
-    (if match
-        (regex-matches regexp string (match-end 0) (append matches (list match)))
+  (save-match-data
+    (let ((pos 0)
+          matches)
+      (while (string-match regexp string pos)
+        (push (match-string 0 string) matches)
+        (setq pos (match-end 0)))
       matches)))
 
 
