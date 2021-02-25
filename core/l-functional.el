@@ -187,6 +187,11 @@
 (defun alist-sort-by-car (alist)
   (sort alist (lambda (a b) (string< (car a) (car b)))))
 
+;;;###autoload
+(defun alist-sort-by-cdr-ci (alist)
+  "sort alist by cdr. case insensitive"
+  (sort alist (lambda (a b) (string< (downcase (cdr a)) (downcase (cdr b))))))
+
 
 
 (provide 'l-functional)
