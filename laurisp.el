@@ -11,6 +11,7 @@
 ;;
 
 (setq lazy-files-dir "~/laurisp/lazy-files")
+(add-to-load-path lazy-files-dir)
 
 ;;
 ;; global keys
