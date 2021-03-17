@@ -11,8 +11,48 @@
 (require 'helm)
 
 ;;
+;; latex preview
+;;
+
+;;;###autoload
+(defun latex-define-preview-settings (&optional img-scale)
+  "Define latex format options using the theme"
+  (interactive)
+  (let* ((foreground-color (face-attribute 'default :foreground))
+         (background-color (face-attribute 'default :background))
+         (text-scale (float (if (boundp 'text-scale-mode-amount) text-scale-mode-amount 0)))
+         (minimum-scale (or img-scale 13))
+         (scale (/  (float (+ minimum-scale text-scale)) 10)))
+    (plist-put org-format-latex-options :scale scale)
+    (plist-put org-format-latex-options :foreground foreground-color)
+    (plist-put org-format-latex-options :background background-color)))
+
+;;;###autoload
+(defun preview-latex-on-buffer ()
+  (interactive)
+  (latex-define-preview-settings)
+  (org-clear-latex-preview)
+  (org-latex-preview '(16)))
+
+;;;###autoload
+(defun preview-latex-on-section ()
+  (interactive)
+  (latex-define-preview-settings)
+  (org-latex-preview '(4))
+  (org-latex-preview))
+
+
+;;
 ;; common functions
 ;;
+
+;;;###autoload
+(defun compile-org-to-pdf ()
+  (interactive)
+  (if (and (boundp 'org-beamer-mode) org-beamer-mode)
+      (org-beamer-export-to-pdf)
+    (org-latex-export-to-pdf)))
+
 
 ;;;###autoload
 (defun lautex--get-org-buffer-name (src-buffer)
@@ -43,7 +83,8 @@
 ;;;###autoload
 (defun lautex--insert-command (command-name arg)
   "insert \\command-name{arg}"
-  (insert (lautex--command command-name arg)))
+  (insert (lautex--command command-name arg))
+  (delete-horizontal-space))
 
 ;;
 ;;  inserting LaTeX enviroment in org mode
@@ -113,33 +154,32 @@
 ;;
 ;; Reference existing labels
 ;;
-(defvar lautex--regex-prefix-label  ".*label\{"
-  "regex prefix for \\label{...}")
+(defvar lautex--regex-prefix-label  ".*label\{" "regex prefix for \\label{...}")
 
-(defvar lautex--regex-sufix-label  "\}.*" 
-  "regex sufix for \\label{...}")
+(defvar lautex--regex-sufix-label  "\}.*" "regex sufix for \\label{...}")
 
 ;;;###autoload
 (defun lautex--get-label (line)
   "get string %s in .*\\label{%s}.*"
-  (lautex--get-text
-   lautex--regex-prefix-label
-   lautex--regex-sufix-label
-   line))
+  (-> line ((lautex--get-text
+             lautex--regex-prefix-label
+             lautex--regex-sufix-label)
+           (replace-regexp-in-string ":CUSTOM_ID: " ""))))
 
 ;;;###autoload
 (defun lautex--insert-reference (label)
   "insert \\ref{label} on text"
   (let ((label-type (capitalize (lautex--label-type label))))
     (unless (string-empty-p label-type)
-      (insert (concat label-type "~"))))
+      (insert (concat label-type " "))))
   (lautex--insert-command "ref" label))
 
 (setq mock-org "/Users/laura.viglioni/Personal/mestrado/eqm-text/eqm.org")
 
 ;;;###autoload
 (defun lautex--label-type (label)
-  (let* ((splitted (split-string label ":"))
+  (let* ((org-label (replace-regexp-in-string ":CUSTOM_ID: " "" label))
+         (splitted (split-string org-label ":"))
          (label-type (if (= 2 (length splitted)) (head splitted) "")))
     (upcase label-type)))
 
@@ -147,9 +187,10 @@
 (defun lautex--build-reference-candidate (match)
   (let* ((label (lautex--get-label match))
          (description (-> label
-                  ((replace-regexp-in-string "[\\._-]" " ")
-                   (replace-regexp-in-string ".*:" "")
-                   (capitalize))))
+                         ((replace-regexp-in-string ":CUSTOM_ID: " "" label)
+                          (replace-regexp-in-string "[\\._-]" " ")
+                          (replace-regexp-in-string ".*:" "")
+                          (capitalize))))
          (label-type (lautex--label-type label))
          (full-description (if (string-empty-p label-type)
                                description
@@ -162,7 +203,9 @@
 (defun lautex--reference-candidates ()
   "Get all labels from a org/latex file"
   (let* ((text (get-string-from-file  (lautex--get-org-file-name)))
-         (matches (regex-matches "\\label\{.*\}" text)))
+         (matches (regex-matches (rx (| (and "label{" (* nonl) "}")
+                                        (and ":CUSTOM_ID:" (? space) (* nonl))))
+                                 text)))
     (seq-map 'lautex--build-reference-candidate matches)))
 
 
