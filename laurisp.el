@@ -10,7 +10,7 @@
 ;; Constants
 ;;
 
-(setq lazy-configs-dir "~/laurisp/lazy-config")
+(setq lazy-files-dir "~/laurisp/lazy-files")
 
 ;;
 ;; global keys

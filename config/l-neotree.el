@@ -16,7 +16,7 @@
        (setq neo-theme 'icons)
        (setq projectile-switch-project-action 'neotree-projectile-action)
        (setq neo-window-fixed-size nil)
-       (load-file (join-path lazy-configs-dir "l-lazy-icons-definitions.el"))
+       (load-file (join-path lazy-files-dir "l-lazy-icons-definitions.el"))
        )))
 
 

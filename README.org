@@ -11,7 +11,7 @@
      - has all the functions I created for my emacs
    - configs
      - has all the main config I use, bindings, hooks etc
-   - lazy-configs
+   - lazy-files
      - these files here are loaded only when they are necessary
    - external
      - external libs I installed manually
