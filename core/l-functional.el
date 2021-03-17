@@ -119,6 +119,8 @@
    [a] -> a | nil"
   (car list))
 
+;TODO: implement last, init
+
 ;;;###autoload
 (defun not-contains? (list element)
   "Returns t/nil if element is not in list
