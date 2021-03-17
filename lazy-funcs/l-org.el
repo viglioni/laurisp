@@ -9,6 +9,34 @@
 ;;
 
 ;;
+;; Insert custom headers
+;;
+
+;;;###autoload
+(defun require-headers-skeletons ()
+  (require 'org-headers-skeletons))
+
+;;;###autoload
+(defun insert-custom-header (header-func)
+  (save-excursion
+    (beginning-of-buffer)
+    (funcall (eval header-func))))
+
+(setq helm-org-insert-custom-headers-sources
+      (helm-build-sync-source "Avaliable headers:"
+        :candidates '(("haskell notebook" . 'org-haskell-notebook-header))
+        :action 'insert-custom-header))
+
+;;;###autoload
+(defun org-insert-custom-headers ()
+  (interactive)
+  (throw-unless (derived-mode-p 'org-mode) "Not in org-mode!")
+  (require-headers-skeletons)
+  (helm :prompt "Choose a header: "
+        :sources helm-org-insert-custom-headers-sources))
+
+
+;;
 ;;  Insert source on org-mode
 ;;
 
