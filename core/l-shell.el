@@ -52,6 +52,7 @@
 
 ;;;###autoload 
 (defun count-all-laurisp-lines ()
+  (interactive)
   (let* ((files-regexp (rx (| (and line-start
                                    (| "l" "test")
                                    (+ (any "-" letter))
@@ -63,7 +64,7 @@
                                    line-end))))
          (files (directory-files-recursively "~/laurisp" files-regexp t))
          (lines (mapcar 'count-non-empty-lines files)))
-    (apply '+ lines)))
+    (print (apply '+ lines))))
 
 (provide 'l-shell)
 
