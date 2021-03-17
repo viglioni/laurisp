@@ -2,23 +2,18 @@
   These are all my elisp files, functions and config, except for the [[https://github.com/Viglioni/spacemacs/blob/master/.spacemacs][.spacemacs]] file.
   More general config instructions about how to use my spacemacs repo, which this repo is a submodule of, you can find at [[https://github.com/Viglioni/spacemacs/blob/master/README.md][here]].
 
-** Files and dirs
-   - laurisp.el
-     - loads all my files, all of them have the form `l-*.el`.* 
-   - core
-     - has all my core functions, /i.e./, what I use to define my other functions.
-   - lazy-funcs
-     - has all the functions I created for my emacs
-   - configs
-     - has all the main config I use, bindings, hooks etc
-   - lazy-files
-     - these files here are loaded only when they are necessary
-   - external
-     - external libs I installed manually
-   - snippets
-     - all the snippets and snippets hierarchy I created/defined
-   - test
-     - well this one is easy, right?
+
+  | Files and dirs | brief description                                                         |
+  |----------------+---------------------------------------------------------------------------|
+  | configs/       | has all the main config I use, bindings, hooks etc                        |
+  | core/          | has all my core functions, /i.e./, what I use to define my other functions. |
+  | external/      | external libs I installed manually                                        |
+  | laurisp.el     | loads all my files, all of them have the form `l-*.el`.*                    |
+  | lazy-files/    | these files here are loaded only when they are necessary                  |
+  | lazy-funcs/    | has all the functions I created for my emacs                              |
+  | snippets/      | all the snippets and snippets hierarchy I created/defined                 |
+  | test/          | well this one is easy, right?                                             |
+
 * Testing
   To run tests we use [[https://github.com/jorgenschaefer/emacs-buttercup/][buttercup]] and [[https://github.com/cask/cask][cask]].
 
