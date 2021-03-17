@@ -23,7 +23,7 @@
   "#+startup: fold"
   "#+name: org-clear-haskell-output"
   "#+begin_src emacs-lisp :var strr=\"\""
-  "(format \"%s\" (replace-regexp-in-string \"\\*Main|? ?>? ?\" \"\"  (format \"%s\" strr)))"
+  "(format \"%s\" (replace-regexp-in-string \"\\*Main|? ?>? ?\" \"\" (format \"%s\" strr)))"
   "#+end_src")
 
 
