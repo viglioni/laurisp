@@ -22,7 +22,7 @@
   "#+Title:"
   "#+startup: fold"
   "#+name: org-clear-haskell-output"
-  "#+begin_src emacs-lisp :var strr=\"\""
+  "#+begin_src emacs-lisp :var strr=\"\" :exports none"
   "(format \"%s\" (replace-regexp-in-string \"\\*Main|? ?>? ?\" \"\" (format \"%s\" strr)))"
   "#+end_src")
 
