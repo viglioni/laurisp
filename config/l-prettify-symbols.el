@@ -23,11 +23,6 @@
                         ))
 
 
-;; applying on all js/ts modes 
-(add-hook 'tide-mode-hook
-          (lambda () (add-symbols-to-mode)))
-
-
 ;; applying to elisp mode
 (add-hook 'emacs-lisp-mode-hook
           (lambda () (add-symbols-to-mode)))
