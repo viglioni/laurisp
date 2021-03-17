@@ -13,6 +13,9 @@
 ;; ORG
 ;;
 
+;; dont ask before running code
+(setq org-confirm-babel-evaluate nil)
+
 (eval-after-load "ox-latex"
   (lambda ()
     ;; add ic-tese-v3 class
@@ -28,45 +31,62 @@
 (eval-after-load "org"
   (lambda ()
     (progn
+      ;; add languages to list
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((haskell . t)
+         (clojure . t)
+         (emacs-lisp . t)
+         (python . t)
+         (js . t)
+         (C . t)
+         (latex . t)
+         (shell . t)
+         (sql . t)))
       ;; disable fullpage preview
-      (add-to-list 'org-latex-packages-alist '("" "fullpage" t))
-      ;; disable line count in presentation mode :)
-      (add-hook 'epresent-mode-hook (lambda () (linum-mode 0)))
+      ;(add-to-list 'org-latex-packages-alist '("" "fullpage" t))
       ;; highlight latex
       (setq org-highlight-latex-and-related '(latex script entities))
-      ;; set custom preview options for latex
-      (plist-put org-format-latex-options :scale 1.3)
-      (plist-put org-format-latex-options :foreground "White")
       ;; org-mode startup
       (setq org-startup-folded t)
       (setq org-startup-with-latex-preview t)
-      ;; add latex commands inside major mode 
+      ;; add latex commands inside major mode
       (spacemacs/declare-prefix-for-mode 'org-mode "\\" "LaTeX")
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "\\t" 'org-toggle-latex-fragment)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "\\b" 'org-beamer-export-to-pdf)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "\\e" 'LauTeX-org-env)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "\\p" 'org-latex-export-to-pdf)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "\\r" 'LauTeX-insert-reference)
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "\\c" 'LauTeX-insert-citation)
-      ;; bind hide entry
-      (spacemacs/set-leader-keys-for-major-mode 'org-mode "hh" 'org-hide-entry)
-      )))
-
-
-
+      (spacemacs/set-leader-keys-for-major-mode 'org-mode
+        "\\t" 'org-toggle-latex-fragment
+        "\\b" 'org-beamer-export-to-pdf
+        "\\e" 'LauTeX-org-env
+        "\\p" 'compile-org-to-pdf
+        "\\r" 'LauTeX-insert-reference
+        "\\c" 'LauTeX-insert-citation
+        "\\s" 'preview-latex-on-section
+        "\\b" 'preview-latex-on-buffer
+        ;; bind hide entry
+        "hh" 'org-hide-entry
+        ;; insert src code
+        "ic" 'insert-org-source))))
 
 
 (add-hook
  'org-mode-hook
  (lambda ()
    ;; key-bindings
-   (local-set-key (kbd "C-<up>") 'org-move-subtree-up)
-   (local-set-key (kbd "C-<down>") 'org-move-subtree-down)
-   (local-set-key (kbd "C-<left>") 'org-promote-subtree)
-   (local-set-key (kbd "C-<right>") 'org-demote-subtree)
+   (local-set-key (kbd "C-<up>") (define-org-cmd
+                                   :heading 'org-move-subtree-up
+                                   :table 'org-table-move-row-up))
+   (local-set-key (kbd "C-<down>") (define-org-cmd
+                                     :heading 'org-move-subtree-down
+                                     :table 'org-table-move-row-down))
+   (local-set-key (kbd "C-<left>") (define-org-cmd
+                                     :heading 'org-promote-subtree
+                                     :table 'org-table-move-column-left))
+   (local-set-key (kbd "C-<right>") (define-org-cmd
+                                      :heading 'org-demote-subtree
+                                      :table 'org-table-move-column-right))
    ;; force line breaks
-   (spacemacs/toggle-visual-line-navigation-on)
-   (setq-local word-wrap nil)
+   (visual-line-mode)
+   ;; define latex preview colours and scale
+   (latex-define-preview-settings)
    ))
 
 
@@ -82,6 +102,8 @@
 ;;
 ;; LaTeX
 ;;
+
+(add-hook 'latex-mode 'visual-line-mode)
 
 (eval-after-load "tex-fold"
   (lambda ()
@@ -99,7 +121,9 @@
 
 
 (spacemacs/declare-prefix-for-mode 'latex-mode "o" "org-edit-functions")
-(spacemacs/set-leader-keys-for-major-mode 'latex-mode "op" 'LauTeX-preview-org-env)
-(spacemacs/set-leader-keys-for-major-mode 'latex-mode "oe" 'LauTeX-org-env-exit)
-(spacemacs/set-leader-keys-for-major-mode 'latex-mode "or" 'LauTeX-insert-reference)
+(spacemacs/set-leader-keys-for-major-mode 'latex-mode
+  "op" 'LauTeX-preview-org-env
+  "oe" 'LauTeX-org-env-exit
+  "or" 'LauTeX-insert-reference)
+
 
