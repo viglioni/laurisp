@@ -49,7 +49,7 @@
       (setq org-highlight-latex-and-related '(latex script entities))
       ;; org-mode startup
       (setq org-startup-folded t)
-      (setq org-startup-with-latex-preview t)
+      (setq org-startup-with-latex-preview nil)
       ;; add latex commands inside major mode
       (spacemacs/declare-prefix-for-mode 'org-mode "\\" "LaTeX")
       (spacemacs/set-leader-keys-for-major-mode 'org-mode
