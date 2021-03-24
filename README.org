@@ -8,15 +8,12 @@
   | configs/       | has all the main config I use, bindings, hooks etc                        |
   | core/          | has all my core functions, /i.e./, what I use to define my other functions. |
   | external/      | external libs I installed manually                                        |
-  | laurisp.el     | loads all my files, all of them have the form ~l-*.elc~                     |
+  | laurisp.el     | loads all my files, all of them have the form ~l-*.el~                      |
   | lazy-files/    | these files here are loaded only when they are necessary                  |
   | lazy-funcs/    | has all the functions I created for my emacs                              |
-  | personal-libs/ | my own libs, all ~.elc~ files in the root are in load-path                  |
+  | personal-libs/ | my own libs                                                               |
   | snippets/      | all the snippets and snippets hierarchy I created/defined                 |
   | test/          | well this one is easy, right?                                             |
-
-* Loading files
-  All files loaded by the functions set in ~laurisp.el~ are ~.elc~ only!
 
 * Testing
   To run tests we use [[https://github.com/jorgenschaefer/emacs-buttercup/][buttercup]] and [[https://github.com/cask/cask][cask]].
