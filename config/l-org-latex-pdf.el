@@ -13,6 +13,8 @@
 ;; ORG
 ;;
 
+(require 'tex-fold)
+
 ;; dont ask before running code
 (setq org-confirm-babel-evaluate nil)
 
@@ -69,7 +71,9 @@
         ;; bind hide entry
         "hh" 'org-hide-entry
         ;; insert src code
-        "ic" 'insert-org-source))))
+        "ic" 'insert-org-source
+        ;; insert custom headings
+        "ia" 'org-insert-custom-headers))))
 
 
 (add-hook

@@ -12,6 +12,8 @@
 ;; Insert custom headers
 ;;
 
+(require 'org-jira)
+
 ;;;###autoload
 (defun require-headers-skeletons ()
   (require 'org-headers-skeletons))
@@ -24,7 +26,9 @@
 
 (setq helm-org-insert-custom-headers-sources
       (helm-build-sync-source "Avaliable headers:"
-        :candidates '(("haskell notebook" . 'org-haskell-notebook-header))
+        :candidates '(("haskell notebook" . 'org-haskell-notebook-header)
+                      ("beamer presentation" . 'org-beamer-presentations-header)
+                      ("latex articles" . 'org-latex-article-header))
         :action 'insert-custom-header))
 
 ;;;###autoload
