@@ -16,6 +16,11 @@
 ;; dont ask before running code
 (setq org-confirm-babel-evaluate nil)
 
+;; set nodepath to use libs in org-babel
+(setenv "NODE_PATH"
+        (concat (getenv "HOME") "/org/node_modules" ":"
+                (getenv "NODE_PATH")))
+
 (eval-after-load "ox-latex"
   (lambda ()
     ;; add ic-tese-v3 class
