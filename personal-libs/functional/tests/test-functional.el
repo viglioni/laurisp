@@ -1,5 +1,5 @@
-(load "./test/l-test-helpers.el")
-(load-test-file "l-functional")
+(load "./tests/buttercup-helpers")
+(load "./src/functional.el")
 
 ;;
 ;; Functions

@@ -3,8 +3,7 @@
 ;; 2020
 ;; GNU Public License 3.0
 ;;
-
-(require 'l-functional)
+(require 'functional)
 (require 'l-string)
 (require 'l-general)
 

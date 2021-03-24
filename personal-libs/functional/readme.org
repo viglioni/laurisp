@@ -1,0 +1,18 @@
+* Functional
+  A functional lib for emacs
+* Testing
+  To run tests we use [[https://github.com/jorgenschaefer/emacs-buttercup/][buttercup]] and [[https://github.com/cask/cask][cask]].
+
+  In the root of this project:
+
+*** To install buttercup dependencies
+    #+begin_src shell
+      $ cask install 
+    #+end_src
+
+*** To run tests
+    #+begin_src shell
+      $ cask exec buttercup -L .
+    #+end_src
+
+

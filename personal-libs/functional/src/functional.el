@@ -196,5 +196,5 @@
 
 
 
-(provide 'l-functional)
+(provide 'functional)
 

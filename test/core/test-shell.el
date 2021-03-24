@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t -*-
-(load "./test/l-test-helpers.el")
-(load-test-file "l-shell")
+(load "./tests/buttercup-helpers.elc")
+(load "./src/l-shell")
+(add-to-list 'load-path "../")
 
 (test-suite "#lpwd"
   (before-each (spy-on 'expand-file-name))

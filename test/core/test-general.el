@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t -*-
-(load "./test/l-test-helpers.el")
-(load-test-file "l-general")
+(load "./tests/buttercup-helpers.elc")
+(load "./src/l-general")
+
 
 (test-suite "#throw-if"
   (context "condition is truthy"

@@ -7,7 +7,7 @@
 
 (require 'request)
 (require 'l-general)
-(require 'l-functional)
+(require 'functional)
 (require 'l-string)
 
 ;;

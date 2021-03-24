@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t -*-
-(load "./test/l-test-helpers.el")
-(load-test-file "l-string")
+(load "./tests/buttercup-helpers.elc")
+(load "./src/l-string")
+(add-to-list 'load-path "../")
 
 (test-suite "#join-path"
   (context "path ends in /"

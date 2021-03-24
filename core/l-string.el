@@ -8,7 +8,7 @@
 ;; string related functions
 ;;
 
-(require 'l-functional)
+(require 'functional)
 (require 'l-general)
 
 ;;;###autoload
@@ -54,7 +54,7 @@
 ;;;###autoload
 (defun go-to-fst-empty-line ()
   "search the first empty line in buffer and go to it"
-  (beginning-of-buffer)
+  (beginning-of-buffer) ;; TODO  use ‘(goto-char (point-min))’ instead.
   (search-forward-regexp "^$"))
 
 ;;;###autoload
