@@ -5,10 +5,10 @@
 ;;
 
 
-(require 'request)
-(require 'l-general)
-(require 'functional)
-(require 'l-string)
+;; (require 'request)
+;; (require 'l-general)
+;; (require 'functional)
+;; (require 'l-string)
 
 ;;
 ;; ramda-docs related functions

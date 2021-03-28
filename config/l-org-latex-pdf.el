@@ -13,7 +13,7 @@
 ;; ORG
 ;;
 
-(require 'tex-fold)
+;(require 'tex-fold)
 
 ;; dont ask before running code
 (setq org-confirm-babel-evaluate nil)

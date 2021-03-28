@@ -12,7 +12,7 @@
 ;; Insert custom headers
 ;;
 
-(require 'org-jira)
+
 
 ;;;###autoload
 (defun require-headers-skeletons ()

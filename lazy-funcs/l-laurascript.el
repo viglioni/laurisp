@@ -9,9 +9,9 @@
 ;;
 
 (require 'helm)
-(require 'functional)
-(require 'l-string)
-(require 'l-general)
+;; (require 'functional)
+;; (require 'l-string)
+;; (require 'l-general)
 
 
 ;;
