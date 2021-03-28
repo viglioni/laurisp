@@ -22,19 +22,19 @@
 (defun open-skhd-config ()
   "opens .skhdrc file"
   (interactive)
-  (find-file "~/../.skhdrc"))
+  (find-file "~/.skhdrc"))
 
 ;;;###autoload
 (defun open-yabai-config ()
   "opens .yabairc file"
   (interactive)
-  (find-file "~/../.yabairc"))
+  (find-file "~/.yabairc"))
 
 ;;;###autoload
 (defun open-zsh-config ()
   "opens .zshrc file"
   (interactive)
-  (find-file "~/../.zshrc"))
+  (find-file "~/.zshrc"))
 
 ;;;###autoload
 (defun open-laurisp ()

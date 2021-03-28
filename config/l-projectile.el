@@ -15,13 +15,13 @@
     (progn
 
       (setq projectile-globally-ignored-directories
-            '(".git" ".svn" "out" "repl" "target" "venv" ".pub-cache" "node_modules" "ios" "android" "dist" ".next"))
+            '(".git" ".svn" "out" "repl" "target" "venv" ".pub-cache" "node_modules" "ios" "android" "dist" ".next" ".cask"))
 
       (setq projectile-globally-ignored-files
             '( ".DS_Store" "*.gz" "*.pyc" "*.jar" "*.tar.gz" "*.tgz" "*.zip" "*.png" ".packages" "*-lock.json" "*.chunk.*" ".lein-repl-history"))
 
       (setq projectile-project-search-path
-            '("~/../Loft/" "~/../Personal/"))
+            '("~/Loft/" "~/Personal/"))
 
       )))
 
