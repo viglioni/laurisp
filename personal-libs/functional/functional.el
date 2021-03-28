@@ -48,7 +48,7 @@
   "Pipe an argument into composed functions from left to right.
    a -> ((a -> b) (b -> c) ... (n -> m)) -> m
    e.g.:
-   (-> (+ 1) (* 2)) -> (lambda (arg1 ... argN) (* 2 (+ 1 arg1 ... argN)))"
+   (->  5 ((+ 1) (* 2))) -> 12"
   `(funcall (compose ,@(reverse  fn-list)) ,arg))
 
 ;;;###autoload
