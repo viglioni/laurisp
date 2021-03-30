@@ -68,7 +68,7 @@
          (db ,(plist-get db-info :database)))
      (throw-if (any-nil? user password host db (quote ,name)) "there are info missing!")
      (let ((full-uri (format-postgres-uri host port user password db))
-           (data-src-name (format-postgres-uri host port user password db)))
+           (data-src-name (format-postgres-sqls host port user password db)))
        (add-to-sqls-connections "postgresql" data-src-name)
        (add-to-sql-conection-alist 'postgres ,name host port user password full-uri))))
 
