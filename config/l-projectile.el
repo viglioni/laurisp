@@ -8,17 +8,44 @@
 ;; projectile related functions
 ;;
 
-
-
 (eval-after-load "projectile"
   (lambda ()
     (progn
 
       (setq projectile-globally-ignored-directories
-            '(".git" ".svn" "out" "repl" "target" "venv" ".pub-cache" "node_modules" "ios" "android" "dist" ".next" ".cask"))
+            '(
+              ".cask"
+              ".git"
+              ".log"
+              ".next"
+              ".pub-cache"
+              ".svn"
+              "android"
+              "dist"
+              "ios"
+              "node_modules"
+              "out"
+              "repl"
+              "target"
+              "venv"
+              ))
 
       (setq projectile-globally-ignored-files
-            '( ".DS_Store" "*.gz" "*.pyc" "*.jar" "*.tar.gz" "*.tgz" "*.zip" "*.png" ".packages" "*-lock.json" "*.chunk.*" ".lein-repl-history"))
+            '(
+              "*-lock.json"
+              "*.chunk.*"
+              "*.gz"
+              "*.jar"
+              "*.log"
+              "*.png"
+              "*.pyc"
+              "*.tar.gz"
+              "*.tgz"
+              "*.zip"
+              ".DS_Store"
+              ".lein-repl-history"
+              ".packages"
+              ))
 
       (setq projectile-project-search-path
             '("~/Loft/" "~/Personal/"))
