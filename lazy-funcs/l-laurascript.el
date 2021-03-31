@@ -24,13 +24,13 @@
    this file in project root or current dir"
   (let ((pjson-file (join-path (or (projectile-project-root) ".") "package.json")))
     (throw-if (not (file-exists-p pjson-file)) "package.json not found!")
-    (-> pjson-file
+    (pf/pipe pjson-file
         ((get-string-from-file)
          (regex-matches (rx "\"dependencies"  (+ (not "}")) "}"))
          (head)
          (replace-regexp-in-string (rx "\"dependencies\": {") "")
          (regex-matches (rx line-start (+ (not ":")) ":"))
-         (mapcar (curry replace-regexp-in-string (rx (or "\"" ":" " " "" "\n")) ""))
+         (mapcar (fp/curry replace-regexp-in-string (rx (or "\"" ":" " " "" "\n")) ""))
          (funcall (lambda (lst) (sort lst #'string<)))))))
 
 ;;;###autoload
@@ -47,7 +47,7 @@
    :prompt "Import lib as: "
    :volatile t
    :sources (helm-build-dummy-source "Import name source"
-              :action (curry laurascript--insert-import lib-name))))
+              :action (fp/curry laurascript--insert-import lib-name))))
 
 ;;;###autoload
 (defun laurascript--helm-libs-source ()

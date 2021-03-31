@@ -5,7 +5,7 @@
 ;;
 
 
-;; (require 'request)
+(require 'request)
 ;; (require 'l-general)
 ;; (require 'functional)
 ;; (require 'l-string)
@@ -31,7 +31,7 @@
 ;;;###autoload
 (defun function-info (html-line)
   (let* ((filtered-string
-          (-> html-line
+          (pf/pipe html-line
              ((replace-regexp-in-string
                (rx (or "data-name" "data-category" "=" "\"" ">"))
                "")
@@ -47,7 +47,7 @@
 ;;;###autoload
 (defun helm-ramda-candidates ()
   (throw-if (any-nil? ramda-html) "ramda's page wasn't downloaded!")
-  (-> ramda-html
+  (pf/pipe ramda-html
      ((parse-funcs-html)
       (mapcar 'function-info)
       (alist-sort-by-cdr-ci))))

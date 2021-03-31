@@ -17,8 +17,8 @@
 
 (defmacro curry-expr (expr)
   "Curries an expression
-   e.g. (curry-expr '(+ 1 2 3)) -> (curry + 1 2 3)"
-  `(eval (seq-concatenate 'list '(curry) ,expr)))
+   e.g. (curry-expr '(+ 1 2 3)) -> (fp/curry + 1 2 3)"
+  `(eval (seq-concatenate 'list '(fp/curry) ,expr)))
 
 (defmacro compose (&rest fn-list)
   "Compose functions (and curries them) from right to left.
@@ -31,24 +31,24 @@
         (lexical-let ((f f) (g g))
           (lambda (&rest args) (funcall f (apply g args)))))
       curried-fn
-      :initial-value (curry identity))))
+      :initial-value (fp/curry identity))))
 
 
 ;;;###autoload
-(defmacro curry (fn &rest initial-args)
+(defmacro fp/curry (fn &rest initial-args)
   "Returns the curried function.
    ((* -> x) arg1, ..., argN) -> ((argN+1, ..., argM) -> x)
    e.g.:
-   (curry + 1 2 3) -> (lambda (argN ... argM) (+ 1 2 3 argN ... argM))"
+   (fp/curry + 1 2 3) -> (lambda (argN ... argM) (+ 1 2 3 argN ... argM))"
   `(lambda (&rest args)
      (apply (quote ,fn) (seq-concatenate 'list (list ,@initial-args) args))))
 
 ;;;###autoload
-(defmacro -> (arg fn-list)
+(defmacro fp/pipe (arg fn-list)
   "Pipe an argument into composed functions from left to right.
    a -> ((a -> b) (b -> c) ... (n -> m)) -> m
    e.g.:
-   (->  5 ((+ 1) (* 2))) -> 12"
+   (pf/pipe  5 ((+ 1) (* 2))) -> 12"
   `(funcall (compose ,@(reverse  fn-list)) ,arg))
 
 ;;;###autoload
@@ -151,7 +151,7 @@
    [[a]] -> [[a]]
    e.g.:
    (zip '(1 1) '(2 2) '(3 3)) -> '((1 2 3) (1 2 3))"
-  (apply (curry  mapcar* 'list) lists))
+  (apply (fp/curry  mapcar* 'list) lists))
 
 ;;
 ;; Number

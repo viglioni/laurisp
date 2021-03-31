@@ -3,9 +3,9 @@
 ;; 2020
 ;; GNU Public License 3.0
 ;;
-(require 'functional)
-(require 'l-string)
-(require 'l-general)
+;;(require 'functional)
+;; (require 'l-string)
+;; (require 'l-general)
 
 ;;
 ;; bash related functions
@@ -43,7 +43,7 @@
 ;;;###autoload
 (defun count-non-empty-lines (file)
   (throw-if (any-nil? file) "file is nil")
-  (-> file
+  (pf/pipe file
      ((get-string-from-file)
       (funcall (lambda (string) (split-string string "\n")))
       (seq-filter (lambda (line) (not (equal 0 (string-match-p "^ *$" line)))))

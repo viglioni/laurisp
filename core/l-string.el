@@ -8,8 +8,8 @@
 ;; string related functions
 ;;
 
-(require 'functional)
-(require 'l-general)
+;;(require 'functional)
+;;(require 'l-general)
 
 ;;;###autoload
 (defun join-path (path filename)

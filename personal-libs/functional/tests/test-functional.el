@@ -33,7 +33,7 @@
 
 (test-suite "#thread-last ->"
   (it-should "pipe functions in the correct order"
-    (expect (-> 10
+    (expect (pf/pipe 10
                ((+ 1)
                 (* 2)))
             :to-be 22)))
@@ -44,11 +44,11 @@
      (funcall  (compose (+ 1) (* 2)) 10)
      :to-equal 21)))
 
-(test-suite "#curry"
+(test-suite "#fp/curry"
   (context "there are several arguments"
     (it-should "curry correctly"
       (expect
-       (funcall (curry + 1 2 3 4 5) 6 7 8 9 10)
+       (funcall (fp/curry + 1 2 3 4 5) 6 7 8 9 10)
        :to-be 55))))
 
 ;;

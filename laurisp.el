@@ -10,20 +10,20 @@
 ;;
 (setq functional-lib-dir "~/laurisp/personal-libs/functional")
 (setq lazy-files-dir "~/laurisp/lazy-files")
-(setq laurisp-core-dir "~/laurisp/core")
+;(setq laurisp-core-dir "~/laurisp/core")
 
 ;;
 ;; add dirs to load path
 ;;
 (add-to-load-path functional-lib-dir)
 (add-to-load-path lazy-files-dir)
-(add-to-load-path laurisp-core-dir)
+;(add-to-load-path laurisp-core-dir)
 
 ;;
 ;; requires
 ;;
 (require 'seq)
-
+(require 'functional)
 
 
 ;;
@@ -44,6 +44,7 @@
     (if (seq-reduce (lambda (acc val) (and acc val)) loaded-files t)
         "laurisp files loaded!"
       "an error has ocurred")))
+
 
 (import-files "core")
 (import-files "lazy-funcs")
