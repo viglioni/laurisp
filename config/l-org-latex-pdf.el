@@ -13,14 +13,13 @@
 ;; ORG
 ;;
 
-;(require 'tex-fold)
 
 ;; dont ask before running code
 (setq org-confirm-babel-evaluate nil)
 
 ;; set nodepath to use libs in org-babel
 (setenv "NODE_PATH"
-        (concat (getenv "HOME") "/org/node_modules" ":"
+        (concat (getenv "HOME") "/org-babel-config/js/node_modules" ":"
                 (getenv "NODE_PATH")))
 
 (eval-after-load "ox-latex"
