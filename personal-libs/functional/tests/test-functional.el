@@ -33,7 +33,7 @@
 
 (test-suite "#thread-last ->"
   (it-should "pipe functions in the correct order"
-    (expect (pf/pipe 10
+    (expect (fp/pipe 10
                ((+ 1)
                 (* 2)))
             :to-be 22)))

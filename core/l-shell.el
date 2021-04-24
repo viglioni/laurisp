@@ -43,7 +43,7 @@
 ;;;###autoload
 (defun count-non-empty-lines (file)
   (throw-if (any-nil? file) "file is nil")
-  (pf/pipe file
+  (fp/pipe file
      ((get-string-from-file)
       (funcall (lambda (string) (split-string string "\n")))
       (seq-filter (lambda (line) (not (equal 0 (string-match-p "^ *$" line)))))

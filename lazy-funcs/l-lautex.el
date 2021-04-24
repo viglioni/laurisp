@@ -63,7 +63,7 @@
   "If in a edit-special buffer, return the org one,
    else return the buffer it was called"
   (or (buffer-file-name)
-      (pf/pipe (buffer-name)
+      (fp/pipe (buffer-name)
          ((lautex--get-org-buffer-name)
           (get-buffer)
           (buffer-file-name)))))
@@ -71,7 +71,7 @@
 ;;;###autoload
 (defun lautex--get-text (regexp-prefix regexp-suffix str)
   "returns string between two regex prefixes"
-  (pf/pipe str
+  (fp/pipe str
      ((replace-regexp-in-string regexp-prefix "")
       (replace-regexp-in-string regexp-suffix ""))))
 
@@ -161,7 +161,7 @@
 ;;;###autoload
 (defun lautex--get-label (line)
   "get string %s in .*\\label{%s}.*"
-  (pf/pipe line ((lautex--get-text
+  (fp/pipe line ((lautex--get-text
              lautex--regex-prefix-label
              lautex--regex-sufix-label)
            (replace-regexp-in-string ":CUSTOM_ID: " ""))))
@@ -186,7 +186,7 @@
 ;;;###autoload
 (defun lautex--build-reference-candidate (match)
   (let* ((label (lautex--get-label match))
-         (description (pf/pipe label
+         (description (fp/pipe label
                          ((replace-regexp-in-string ":CUSTOM_ID: " "" label)
                           (replace-regexp-in-string "[\\._-]" " ")
                           (replace-regexp-in-string ".*:" "")
@@ -244,20 +244,20 @@
 ;;;###autoload
 (defun lautex--get-citation (line)
   "get string %s in .*\\label{%s}.*"
-  (pf/pipe line
+  (fp/pipe line
      ((replace-regexp-in-string "@[a-zA-Z]*\{" "")
       (replace-regexp-in-string "," "" ))))
 
 (defun lautex--bib-citations (file-path)
   "get all citations from a given file"
-  (pf/pipe (get-string-from-file file-path)
+  (fp/pipe (get-string-from-file file-path)
      ((regex-matches "@[a-zA-Z]*\{[a-z0-9A-Z].*,")
       (seq-map 'lautex--get-citation))))
 
 ;;;###autoload
 (defun lautex--bib-info (line)
   "get info from a bib line"
-  (pf/pipe line
+  (fp/pipe line
      ((replace-regexp-in-string "[a-z]* ?= ?\{*" "")
       (replace-regexp-in-string "\}.*" ""))))
 
@@ -297,7 +297,7 @@
 ;;;###autoload
 (defun lautex--citation-candidates ()
   "get all citation candidates of all bib files"
-  (pf/pipe (lautex--get-bib-files)
+  (fp/pipe (lautex--get-bib-files)
      ((seq-map 'lautex--form-candidates)
       (apply 'append)
       (alist-sort-by-car))))

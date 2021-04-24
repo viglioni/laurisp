@@ -24,7 +24,7 @@
    this file in project root or current dir"
   (let ((pjson-file (join-path (or (projectile-project-root) ".") "package.json")))
     (throw-if (not (file-exists-p pjson-file)) "package.json not found!")
-    (pf/pipe pjson-file
+    (fp/pipe pjson-file
         ((get-string-from-file)
          (regex-matches (rx "\"dependencies"  (+ (not "}")) "}"))
          (head)
