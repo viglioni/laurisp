@@ -10,6 +10,7 @@
 ;;
 (setq functional-lib-dir "~/laurisp/personal-libs/functional")
 (setq lazy-files-dir "~/laurisp/lazy-files")
+(setq external-libs-dir "~/laurisp/external")
 ;(setq laurisp-core-dir "~/laurisp/core")
 
 ;;
