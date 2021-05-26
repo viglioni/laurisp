@@ -27,7 +27,6 @@
                  (message "Got error: %S" error-thrown))))))
 
 ;;;###autoload
-
 (defun function-info (html-line)
   (let* ((filtered-string
           (fp/pipe html-line
@@ -40,12 +39,10 @@
     (cons (format "(%s) %s" fn-category fn-name) fn-name)))
 
 ;;;###autoload
-
 (defun parse-funcs-html (html)
   (regex-matches "data-name=\"[[:alpha:]_]*\" data-category=\"[[:alpha:]]*\"" html))
 
 ;;;###autoload
-
 (defun helm-ramda-candidates ()
   (throw-if (any-nil? ramda-html) "ramda's page wasn't downloaded!")
   (fp/pipe ramda-html
@@ -54,12 +51,11 @@
             (alist-sort-by-cdr-ci))))
 
 ;;;###autoload
-
 (defun open-ramda-doc-url (fn-name)
   (browse-url (concat ramda-docs-url "#" fn-name)))
 
-;;;###autoload
 
+;;;###autoload
 (defun open-ramda-docs ()
   (interactive)
   (download-ramda-html)
@@ -68,4 +64,28 @@
                    :candidates 'helm-ramda-candidates
                    :action 'open-ramda-doc-url)))
 
-    
+
+(provide 'ramda-docs)
+
+;;
+;; warnings
+;;
+
+;; Entering directory ‘/Users/laura.viglioni/laurisp/personal-libs/ramda-docs/’
+;; ramda-docs.el:16:7:Warning: assignment to free variable ‘ramda-docs-url’
+
+;; In download-ramda-html:
+;; ramda-docs.el:21:14:Warning: reference to free variable ‘ramda-docs-url’
+
+;; In function-info:
+;; ramda-docs.el:36:23:Warning: function ‘reduce’ from cl package called at
+;; runtime
+
+;; In helm-ramda-candidates:
+;; ramda-docs.el:47:23:Warning: function ‘reduce’ from cl package called at
+;; runtime
+
+;; In open-ramda-doc-url:
+;; ramda-docs.el:55:23:Warning: reference to free variable ‘ramda-docs-url’
+
+

@@ -26,10 +26,10 @@
     (byte-compile-file filename)))
 
 ;;;###autoload
-(defun recompile-laurisp ()
-  (interactive)
-  (seq-do
-   (lambda (dir)
-     (byte-recompile-directory (concat "~/laurisp/" dir) 0 t))
-   ["lazy-files" "lazy-funcs" "personal-libs" "core" "external"]))
+;; (defun recompile-laurisp ()
+;;   (interactive)
+;;   (seq-do
+;;    (lambda (dir)
+;;      (byte-recompile-directory (concat "~/laurisp/" dir) 0 t))
+;;    ["lazy-files" "lazy-funcs" "personal-libs" "core" "external"]))
 

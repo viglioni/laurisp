@@ -11,20 +11,29 @@
 ;; set to run globally
 
 
-(global-prettify-symbols-mode +1)
-
 ;; symbols do be used in any mode
-(setq generic-symbols '(("->" . ?→)
-                        ("=>" . ?⇒)
-                        ("/=" . ?≠)
-                        ("!==" . ?≠)
-                        ("<=" . ?≤)
-                        (">=" . ?≥)
-                        ))
+(setq generic-symbols
+      '(("->" . ?→)
+        ("=>" . ?⇒)
+        ("/=" . ?≠)
+        ("!==" . ?≠)
+        ("<=" . ?≤)
+        (">=" . ?≥)
+        ))
 
 
-;; applying to elisp mode
-(add-hook 'emacs-lisp-mode-hook
-          (lambda () (add-symbols-to-mode)))
+(with-eval-after-load "prog-mode"
+
+  (defun add-symbols-to-mode (&optional symbols)
+    (dolist symbols
+      (if (not-contains? prettify-symbols-alist symbol)
+          (push symbol prettify-symbols-alist))))
+
+  (global-prettify-symbols-mode +1)
+
+  ;; applying to all modes
+  (add-hook 'prog-mode-hook
+            (lambda () (add-symbols-to-mode generic-symbols))))
+
 
 

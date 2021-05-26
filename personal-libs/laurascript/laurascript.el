@@ -68,6 +68,15 @@
         :buffer "*helm buffer source*"))
 
 
+(provide 'laurascript)
+
+;;
+;; compilation warnings
+;;
+
+;; laurascript.el:34:20:Warning: function ‘reduce’ from cl package called at
+;; runtime
+
 
 
 

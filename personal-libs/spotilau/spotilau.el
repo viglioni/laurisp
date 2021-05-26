@@ -65,6 +65,7 @@
 
 ;;;###autoload
 (defun show-spotify-status ()
+  (message "getting spotify info...")
   (let* ((buffer-name "spotify-status")
          (status (get-spotify-status))
          (vol (get-spotify-vol)))
@@ -79,3 +80,18 @@
   (interactive)
   (show-spotify-status)
   (call-interactively 'spotify-helper))
+
+(provide 'spotilau)
+
+
+;;
+;; warnings
+;;
+
+;; In insert-spotify-buffer-content:
+;; spotilau.el:40:28:Warning: function ‘reduce’ from cl package called at runtime
+
+;; In show-spotify-status:
+;; spotilau.el:75:6:Warning: ‘toggle-read-only’ is an obsolete function (as of 24.3); use ‘read-only-mode’ instead.
+
+
