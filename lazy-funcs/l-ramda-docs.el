@@ -6,9 +6,7 @@
 
 
 (require 'request)
-;; (require 'l-general)
-;; (require 'functional)
-;; (require 'l-string)
+
 
 ;;
 ;; ramda-docs related functions
@@ -29,34 +27,39 @@
                  (message "Got error: %S" error-thrown))))))
 
 ;;;###autoload
+
 (defun function-info (html-line)
   (let* ((filtered-string
           (fp/pipe html-line
-             ((replace-regexp-in-string
-               (rx (or "data-name" "data-category" "=" "\"" ">"))
-               "")
-              ((lambda (str) (split-string str " "))))))
+                   ((replace-regexp-in-string
+                     (rx (or "data-name" "data-category" "=" "\"" ">"))
+                     "")
+                    ((lambda (str) (split-string str " "))))))
          (fn-name (head filtered-string))
          (fn-category (nth 1 filtered-string)))
     (cons (format "(%s) %s" fn-category fn-name) fn-name)))
 
 ;;;###autoload
+
 (defun parse-funcs-html (html)
   (regex-matches "data-name=\"[[:alpha:]_]*\" data-category=\"[[:alpha:]]*\"" html))
 
 ;;;###autoload
+
 (defun helm-ramda-candidates ()
   (throw-if (any-nil? ramda-html) "ramda's page wasn't downloaded!")
   (fp/pipe ramda-html
-     ((parse-funcs-html)
-      (mapcar 'function-info)
-      (alist-sort-by-cdr-ci))))
+           ((parse-funcs-html)
+            (mapcar 'function-info)
+            (alist-sort-by-cdr-ci))))
 
 ;;;###autoload
+
 (defun open-ramda-doc-url (fn-name)
   (browse-url (concat ramda-docs-url "#" fn-name)))
 
 ;;;###autoload
+
 (defun open-ramda-docs ()
   (interactive)
   (download-ramda-html)
@@ -65,3 +68,4 @@
                    :candidates 'helm-ramda-candidates
                    :action 'open-ramda-doc-url)))
 
+    
