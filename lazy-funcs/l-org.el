@@ -53,6 +53,7 @@
 (defun org-insert-src (src-name)
   (cond
    ((string= "haskell" src-name) (--org-insert-src src-name "org-clear-haskell-output") )
+   ((string= "clojure" src-name) (--org-insert-src src-name "org-clear-clojure-output") )
    (t (--org-insert-src src-name))))
 
 (setq helm-org-sources
