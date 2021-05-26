@@ -20,17 +20,23 @@
               ".next"
               ".nyc_output"
               ".pub-cache"
+              ".rush"
               ".svn"
               ".vscode"
               "android"
+              "bundle*"
+              "coverage"
               "dist"
               "dist-*"
               "ios"
               "node_modules"
               "out"
               "repl"
+              "rush"
               "target"
+              "temp"
               "venv"
+              "webnext/common"
               ))
 
       (setq projectile-globally-ignored-files
