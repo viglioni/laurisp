@@ -81,8 +81,6 @@
 ;; Importing files
 ;;
 
-;; (import-laurisp-files "../.private")
-;; (load "~/laurisp/external/emacs-grammarly/emacs-grammarly.el")
 (import-laurisp-files "config")
 
 (provide 'laurisp)

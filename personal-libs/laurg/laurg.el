@@ -8,6 +8,7 @@
 ;; org related functions
 ;;
 
+(require 'helm)
 (message "loading laurg...")
 
 ;;
