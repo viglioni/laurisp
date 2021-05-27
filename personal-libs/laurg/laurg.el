@@ -8,14 +8,15 @@
 ;; org related functions
 ;;
 
+(message "loading laurg...")
+
 ;;
 ;; Insert custom headers
+;; ;TODO: convert this to a lib
 ;;
 
-
-
 ;;;###autoload
-(defun require-headers-skeletons ()
+(defun require-headers-skeletons () 
   (require 'org-headers-skeletons))
 
 ;;;###autoload
@@ -113,3 +114,31 @@
       ((org-at-heading-p) (funcall ,(plist-get plist :heading)))
       ((org-at-table-p)   (funcall ,(plist-get plist :table))))))
 
+(provide 'laurg)
+
+;;
+;; warnings
+;;
+
+;; In insert-custom-header:
+;; laurg.el:23:30:Warning: ‘beginning-of-buffer’ is for interactive use only; use
+;; ‘(goto-char (point-min))’ instead.
+;; laurg.el:28:7:Warning: assignment to free variable
+;; ‘helm-org-insert-custom-headers-sources’
+
+;; In org-insert-custom-headers:
+;; laurg.el:41:18:Warning: reference to free variable
+;; ‘helm-org-insert-custom-headers-sources’
+;; laurg.el:60:7:Warning: assignment to free variable ‘helm-org-sources’
+;; laurg.el:65:7:Warning: assignment to free variable ‘helm-org-sources-fallback’
+
+;; In insert-org-source:
+;; laurg.el:78:10:Warning: ‘previous-line’ is for interactive use only; use
+;; ‘forward-line’ with negative argument instead.
+
+;; In define-org-cmd:
+;; laurg.el:110:27:Warning: function ‘oddp’ from cl package called at runtime
+
+;; In end of data:
+;; laurg.el:118:1:Warning: the following functions are not known to be defined: org-edit-special,
+;; org-jira-get-from-org

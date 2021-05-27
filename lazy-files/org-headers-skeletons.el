@@ -33,7 +33,7 @@
   "#+startup: fold"
   "#+name: org-clear-clojure-output"
   "#+begin_src emacs-lisp :var strr=\"\" :exports none"
-  "(replace-regexp-in-string (rx (| (and \"(#'user\" (+ (not \")\")) \")\" (+ white)) (and line-start \"(\") (and \")\" line-end))) \"\" (format "%s" strr))"
+  "(replace-regexp-in-string (rx (| (and \"(#'user\" (+ (not \")\")) \")\" (+ white)) (and line-start \"(\") (and \")\" line-end))) \"\" (format \"%s\" strr))"
   "#+end_src")
 
 
@@ -66,3 +66,10 @@
   "#+latex_class_options: [a4paper,12pt]")
 
 (provide 'org-headers-skeletons)
+
+;;
+;; warnings
+;;
+
+;; org-headers-skeletons.el:30:1:Error: Wrong type argument: sequencep, %s
+

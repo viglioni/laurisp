@@ -11,7 +11,10 @@
 
 (with-eval-after-load "neotree"
   (setq neo-theme 'icons)
-  (setq neo-window-fixed-size nil)
-                                        ;(load-file (join-path lazy-files-dir "l-lazy-icons-definitions.el"))
-  )
+  (setq neo-window-fixed-size nil))
+
+(with-eval-after-load "all-the-icons"
+  (load-lib 'custom-icons-definitions)
+  (setq all-the-icons-icon-alist custom-icons))
+
 

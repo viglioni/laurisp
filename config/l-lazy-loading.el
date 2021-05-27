@@ -34,6 +34,36 @@
 (spacemacs/set-leader-keys
   "@" 'prepare-ide)
 
+;;
+;; lautex
+;;
+
+;;;###autoload
+(defun latex-define-preview-settings ()
+  (interactive)
+  (call-lazy-function 'latex-define-preview-settings 'lautex))
+
+
+
+;;
+;; laurg
+;;
+
+;;;###autoload
+(defun org-insert-custom-headers ()
+  (interactive)
+  (call-lazy-function 'org-insert-custom-headers 'laurg))
+
+;;;###autoload
+(defun insert-org-source ()
+  (interactive)
+  (call-lazy-function 'insert-org-source 'laurg))
+
+;;;###autoload
+(defun org-jira-copy-current-issue-url ()
+  (interactive)
+  (call-lazy-function 'org-jira-copy-current-issue-url 'laurg))
+
 
 ;;
 ;; ramda docs

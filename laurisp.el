@@ -12,6 +12,7 @@
 (setq external-libs-dir "~/laurisp/external")
 (setq laurisp-config-dir "~/laurisp/config")
 (setq private-files-dir "~/private-files/emacs-files")
+(setq lazy-files-dir "~/laurisp/lazy-files")
 
 ;;
 ;; add lib dirs to load path
@@ -24,6 +25,7 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 (add-to-list 'load-path private-files-dir)
+(add-to-list 'load-path lazy-files-dir)
 
 ;;
 ;; requires

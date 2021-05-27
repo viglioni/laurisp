@@ -9,6 +9,7 @@
 ;;
 
 (require 'helm)
+(message "loading lautex...")
 
 ;;
 ;; latex preview
@@ -293,7 +294,6 @@
         years titles authors citations)))
 
 
-
 ;;;###autoload
 (defun lautex--citation-candidates ()
   "get all citation candidates of all bib files"
@@ -317,5 +317,56 @@
         :sources (lautex--helm-citation-source)
         :buffer "*helm buffer source*"))
 
+
+(provide 'lautex)
+
+;;
+;; warnings
+;;
+
+;; In latex-define-preview-settings:
+;; lautex.el:29:16:Warning: reference to free variable ‘org-format-latex-options’
+
+;; In lautex--get-org-file-name:
+;; lautex.el:70:12:Warning: function ‘reduce’ from cl package called at runtime
+
+;; In lautex--get-text:
+;; lautex.el:73:54:Warning: function ‘reduce’ from cl package called at runtime
+;; lautex.el:107:7:Warning: assignment to free variable
+;;     ‘lautex--helm-env-sources’
+;; lautex.el:112:7:Warning: assignment to free variable
+;;     ‘lautex--helm-env-sources-fallback’
+
+;; In LauTeX-org-env:
+;; lautex.el:126:10:Warning: ‘previous-line’ is for interactive use only; use
+;;     ‘forward-line’ with negative argument instead.
+
+;; In lautex--get-label:
+;; lautex.el:163:27:Warning: function ‘reduce’ from cl package called at runtime
+;; lautex.el:178:7:Warning: assignment to free variable ‘mock-org’
+
+;; In lautex--build-reference-candidate:
+;; lautex.el:198:44:Warning: function ‘reduce’ from cl package called at runtime
+
+;; In lautex--get-citation:
+;; lautex.el:246:30:Warning: function ‘reduce’ from cl package called at runtime
+
+;; In lautex--bib-citations:
+;; lautex.el:252:31:Warning: function ‘reduce’ from cl package called at runtime
+
+;; In lautex--bib-info:
+;; lautex.el:259:26:Warning: function ‘reduce’ from cl package called at runtime
+
+;; In lautex--form-candidates:
+;; lautex.el:293:77:Warning: function ‘mapcar*’ from cl package called at runtime
+
+;; In lautex--citation-candidates:
+;; lautex.el:302:8:Warning: function ‘reduce’ from cl package called at runtime
+
+;; In end of data:
+;; lautex.el:322:1:Warning: the following functions are not known to be defined: org-clear-latex-preview,
+;;     org-latex-preview, org-beamer-export-to-pdf, org-latex-export-to-pdf,
+;;     org-edit-special, org-edit-src-exit, org-toggle-latex-fragment,
+;;     org-edit-src-save
 
 
