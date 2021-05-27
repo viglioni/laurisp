@@ -4,15 +4,8 @@
 ;; GNU Public License 3.0
 ;;
 
-;;
-;; tide related functions
-;;
-
+(message "loading laurascript...")
 (require 'helm)
-;; (require 'functional)
-;; (require 'l-string)
-;; (require 'l-general)
-
 
 ;;
 ;; Import JS libs from package.json

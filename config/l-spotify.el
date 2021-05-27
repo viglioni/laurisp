@@ -9,8 +9,6 @@
 ;;
 
 
-
-
 (setq spotify-menu-bar (bind-lazy-function 'spotify-helper 'spotilau))
 (setq spotify-menu (bind-lazy-function 'spotify-status 'spotilau))
 
@@ -21,8 +19,8 @@
 ;; set alias keybindings
 (which-key-add-key-based-replacements "M-p" "Spotify")
 
-(global-set-key (kbd "M-p M-p") 'spotify-menu-bar)
-(global-set-key (kbd "M-p p") 'spotify-menu)
+(global-set-key (kbd "M-p M-p") spotify-menu-bar)
+(global-set-key (kbd "M-p p") spotify-menu)
 
 
 

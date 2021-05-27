@@ -4,6 +4,7 @@
 ;; GNU Public License 3.0
 ;;
 
+(message "loading laurisp-core...")
 ;;
 ;; general related functions
 ;;

@@ -4,6 +4,8 @@
 ;; GNU Public License 3.0
 ;;
 
+(message "loading functional...")
+
 ;;
 ;; functional related functions
 ;;

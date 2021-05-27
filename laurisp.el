@@ -10,7 +10,8 @@
 ;;
 (setq personal-lib-dir "~/laurisp/personal-libs/")
 (setq external-libs-dir "~/laurisp/external")
-(setq laurisp-confg-dir "~/laurisp/config")
+(setq laurisp-config-dir "~/laurisp/config")
+(setq private-files-dir "~/private-files/emacs-files")
 
 ;;
 ;; add lib dirs to load path
@@ -21,6 +22,8 @@
 
 (let ((default-directory external-libs-dir))
   (normal-top-level-add-subdirs-to-load-path))
+
+(add-to-list 'load-path private-files-dir)
 
 ;;
 ;; requires
@@ -70,6 +73,7 @@
   "Calls a function from a lib that is not imported by default"
   `(call-interactively (bind-lazy-function ,func-name ,package-name)))
 
+;;;###autoload
 
 ;;
 ;; Importing files

@@ -6,7 +6,7 @@
 
 
 (require 'request)
-
+(message "loading ramda-docs...")
 
 ;;
 ;; ramda-docs related functions
@@ -17,6 +17,7 @@
 
 ;;;###autoload
 (defun download-ramda-html ()
+  (message "fetching ramda data...")
   (unless ramda-html
     (request ramda-docs-url
       :sync t
@@ -24,7 +25,7 @@
                 (lambda (&key data &allow-other-keys) (setq ramda-html data)))
       :error  (cl-function
                (lambda (&key error-thrown &allow-other-keys&rest _)
-                 (message "Got error: %S" error-thrown))))))
+                 (error "Got error: %S" error-thrown))))))
 
 ;;;###autoload
 (defun function-info (html-line)

@@ -4,9 +4,7 @@
 ;; GNU Public License 3.0
 ;;
 
-;;
-;; lsp related functions
-;;
+(message "loading launguage-server-protocol...")
 
 ;;
 ;; explain error at point

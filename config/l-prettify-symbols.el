@@ -25,9 +25,9 @@
 (with-eval-after-load "prog-mode"
 
   (defun add-symbols-to-mode (&optional symbols)
-    (dolist symbols
+    (dolist (symbol symbols)
       (if (not-contains? prettify-symbols-alist symbol)
-          (push symbol prettify-symbols-alist))))
+          (push symbol prettify-symbols-alist)))) 
 
   (global-prettify-symbols-mode +1)
 

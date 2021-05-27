@@ -36,9 +36,8 @@
 ;; shell
 ;;
 
+(load-lib 'env-private)
 (setq sh-indentation 2)
-(with-eval-after-load "exec-path-from-shell-initialize"
-  (exec-path-from-shell-initialize))
 
 ;; open dotfiles with sh-mode
 (add-to-list 'auto-mode-alist '("/\\.[a-zA-Z0-09]*rc$" . sh-mode))

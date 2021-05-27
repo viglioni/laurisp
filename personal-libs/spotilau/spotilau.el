@@ -8,6 +8,8 @@
 ;; lazy-spotify related functions
 ;;
 
+(message "loading spotilau...")
+
 ;;;###autoload
 (defun spotify-share-song ()
   (let* ((cmd-ret (shell-command-to-string "spotify share url"))
