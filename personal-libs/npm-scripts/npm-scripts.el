@@ -28,7 +28,7 @@
 ;;;###autoload
 (defun NS--build-scripts (scripts-list)
   "@param a list of strings
-   @returns an alist of (scriptname . \"npm run script\""
+   @returns an alist of (scriptname . \"npm run script\")"
   (mapcar (lambda (script) (cons (format "%s" script)
                             (format "npm run %s" script)))
           scripts-list))
@@ -57,7 +57,8 @@
 ;;;###autoload
 (defun NS--is-npm-buff? (buff-or-buff-name)
   "Checks if a buffer name matches the regex of this lib created buffers
-   @param (string | buffer)"
+   @param (string | buffer)
+   @returns bool"
   (let ((buff-name (if (stringp buff-or-buff-name) buff-or-buff-name
                      (buffer-name buff-or-buff-name))))
     (bool (regex-matches (rx "*npm:" (+ (or alphanumeric ":")) "*") buff-name))))
