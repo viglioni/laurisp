@@ -300,7 +300,7 @@
   (fp/pipe (lautex--get-bib-files)
      ((seq-map 'lautex--form-candidates)
       (apply 'append)
-      (alist-sort-by-car))))
+      (fp/alist-sort-by-car))))
 
 ;;;###autoload
 (defun lautex--helm-citation-source ()
