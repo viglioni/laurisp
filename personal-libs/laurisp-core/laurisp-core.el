@@ -4,7 +4,6 @@
 ;; GNU Public License 3.0
 ;;
 
-(message "loading laurisp-core...")
 ;;
 ;; general related functions
 ;;
@@ -67,6 +66,22 @@
 ;; bash related functions
 ;;
 
+;;;###autoload
+(defun gen-uuid-to-clipboard ()
+  "generates uuid and copies it to clipboard"
+  (interactive)
+  (let ((uuid (replace-regexp-in-string
+               "\n" ""
+               (shell-command-to-string "uuidgen | tr '[:upper:]' '[:lower:]' "))))
+    (kill-new uuid)
+    (message (format "copied %s to clipboard" uuid))
+    uuid))
+
+;;;###autoload
+(defun insert-uuid ()
+  "inserts random uuid"
+  (interactive)
+  (insert (gen-uuid-to-clipboard))) 
 
 ;;;###autoload
 (defun lpwd (&optional dir)
