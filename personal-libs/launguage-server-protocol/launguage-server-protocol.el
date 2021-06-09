@@ -4,13 +4,12 @@
 ;; GNU Public License 3.0
 ;;
 
-;;
-;; lsp related functions
-;;
+(message "loading launguage-server-protocol...")
 
 ;;
 ;; explain error at point
 ;;
+
 (setq LauSP--error-buffer "LauSP-error-at-point")
 
 ;;;###autoload
@@ -82,3 +81,32 @@
       (setq-local lsp-buffer-uri nil)
       (lsp)
       (lsp--info "Renamed '%s' to '%s'." name (file-name-nondirectory new)))))
+
+
+(provide 'launguage-server-protocol)
+
+
+;;
+;; compilation warnings
+;;
+
+
+;; launguage-server-protocol.el:14:7:Warning: assignment to free variable
+;; ‘LauSP--error-buffer’
+
+;; In LauSP--kill-error-buffer:
+;; launguage-server-protocol.el:19:19:Warning: reference to free variable
+;; ‘LauSP--error-buffer’
+
+;; In lsp-explain-error-at-point:
+;; launguage-server-protocol.el:43:46:Warning: reference to free variable
+;; ‘LauSP--error-buffer’
+
+;; In lsp-ts-rename-file:
+;; launguage-server-protocol.el:82:19:Warning: assignment to free variable
+;; ‘lsp-buffer-uri’
+
+;; In end of data:
+;; launguage-server-protocol.el:88:1:Warning: the following functions are not known to be defined:
+;; lsp--send-execute-command, lsp--buffer-uri, lsp--path-to-uri,
+;; lsp-disconnect, lsp--info

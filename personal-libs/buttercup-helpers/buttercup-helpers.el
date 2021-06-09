@@ -4,6 +4,7 @@
 ;; GNU Public License 3.0
 ;;
 
+(message "loading buttercup-helpers...")
 
 ;;;###autoload
 (defun load-test-file (file-name)

@@ -8,9 +8,19 @@
 ;; icons-definitions related functions
 ;;
 
+(message "loading custom-icons-definitions...")
+
+;;;###autoload
+(defun icon-def (regex icon-name &optional face icon-pkg height v-adjust)
+  (let ((f (or face 'all-the-icons-lpurple))
+        (h (or height '1.0))
+        (v (or v-adjust '0.0))
+        (icon-pack (or icon-pkg 'all-the-icons-fileicon)))
+    (list regex icon-pack icon-name :height h :v-adjust v :face f)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;          Javascript family          ;
+;                             Javascript family                               ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq js-colour 'all-the-icons-yellow)
@@ -256,13 +266,43 @@
  ("^\\." all-the-icons-octicon "gear" :v-adjust 0.0)
  (".?" all-the-icons-faicon "file-o" :v-adjust 0.0 :face all-the-icons-dsilver)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                                        ;         All icons to be used        ;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq icons-definitions
+(setq custom-icons
       (append
        js-family-icons
        other-icons))
 
-(setq all-the-icons-icon-alist icons-definitions)
+;; (setq all-the-icons-icon-alist icons-definitions)
+
+(provide 'custom-icons-definitions)
+
+;;
+;; warnings
+;;
+;; custom-icons-definitions.el:26:7:Warning: assignment to free variable
+;;     ‘js-colour’
+;; custom-icons-definitions.el:31:36:Warning: reference to free variable
+;;     ‘js-colour’
+;; custom-icons-definitions.el:28:2:Warning: assignment to free variable
+;;     ‘js-icons’
+;; custom-icons-definitions.el:39:7:Warning: assignment to free variable
+;;     ‘ts-colour’
+;; custom-icons-definitions.el:43:41:Warning: reference to free variable
+;;     ‘ts-colour’
+;; custom-icons-definitions.el:40:7:Warning: assignment to free variable
+;;     ‘ts-icons’
+;; custom-icons-definitions.el:53:2:Warning: assignment to free variable
+;;     ‘other-js-family-icons’
+;; custom-icons-definitions.el:67:8:Warning: reference to free variable
+;;     ‘js-icons’
+;; custom-icons-definitions.el:68:8:Warning: reference to free variable
+;;     ‘ts-icons’
+;; custom-icons-definitions.el:69:8:Warning: reference to free variable
+;;     ‘other-js-family-icons’
+;; custom-icons-definitions.el:65:7:Warning: assignment to free variable
+;;     ‘js-family-icons’
+;; custom-icons-definitions.el:79:8:Warning: reference to free variable
+;;     ‘js-family-icons’
+;; custom-icons-definitions.el:77:7:Warning: assignment to free variable
+;;     ‘custom-icons-definitions’
+

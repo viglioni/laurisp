@@ -8,35 +8,41 @@
 ;;
 ;; Constants
 ;;
-(setq functional-lib-dir "~/laurisp/personal-libs/functional")
-(setq lazy-files-dir "~/laurisp/lazy-files")
+(setq personal-lib-dir "~/laurisp/personal-libs/")
 (setq external-libs-dir "~/laurisp/external")
-;(setq laurisp-core-dir "~/laurisp/core")
+(setq laurisp-config-dir "~/laurisp/config")
+(setq private-files-dir "~/private-files/emacs-files")
+(setq lazy-files-dir "~/laurisp/lazy-files")
 
 ;;
-;; add dirs to load path
+;; add lib dirs to load path
 ;;
-(add-to-load-path functional-lib-dir)
-(add-to-load-path lazy-files-dir)
-;(add-to-load-path laurisp-core-dir)
+
+(let ((default-directory  personal-lib-dir))
+  (normal-top-level-add-subdirs-to-load-path))
+
+(let ((default-directory external-libs-dir))
+  (normal-top-level-add-subdirs-to-load-path))
+
+(add-to-list 'load-path private-files-dir)
+(add-to-list 'load-path lazy-files-dir)
 
 ;;
 ;; requires
 ;;
-(require 'seq)
+
 (require 'functional)
+(require 'laurisp-core)
 
 
-;;
-;; global keys
-;;
-
-(global-set-key (kbd "<f19> <f19>") 'helm-M-x) 
 
 ;;
-;; import all laurisp files
+;; import files functions 
 ;;
-(defun import-files (dir)
+
+;;;###autoload
+(defun import-laurisp-files (dir)
+  "import all laurisp files from a dir"
   (let* ((path (concat "~/laurisp/" dir))
          (all-files (directory-files path t "^l-[a-z\\-].*\\.el$"))
          (loaded-files (mapcar (lambda (laurisp-file)
@@ -46,12 +52,36 @@
         "laurisp files loaded!"
       "an error has ocurred")))
 
+;;;###autoload
+(defmacro load-lib (lib-name)
+  "requires a lib in external or personal lib dir. Usage example:
+   (load-lib 'emacs-grammarly)"
+  `(require ,lib-name))
 
-(import-files "core")
-(import-files "lazy-funcs")
-(import-files "config")
-(import-files "../.private")
-(load "~/laurisp/external/emacs-grammarly/emacs-grammarly.el")
+;;;###autoloading
+(defmacro bind-lazy-function (func-name package-name)
+  "Returns an interactive lambda function of a lib that is not imported by default
+   Usage example:
+   (global-set-key (kbd \"M-p M-p\")
+     (bind-lazy-function 'spotify-status 'spotilau))"
+  `(lambda ()
+     (interactive)
+     (message "loading module...")
+     (load-lib ,package-name)
+     (call-interactively ,func-name)))
+
+;;;###autoload
+(defmacro call-lazy-function (func-name package-name)
+  "Calls a function from a lib that is not imported by default"
+  `(call-interactively (bind-lazy-function ,func-name ,package-name)))
+
+;;;###autoload
+
+;;
+;; Importing files
+;;
+
+(import-laurisp-files "config")
 
 (provide 'laurisp)
 

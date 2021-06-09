@@ -4,15 +4,8 @@
 ;; GNU Public License 3.0
 ;;
 
-;;
-;; tide related functions
-;;
-
+(message "loading laurascript...")
 (require 'helm)
-;; (require 'functional)
-;; (require 'l-string)
-;; (require 'l-general)
-
 
 ;;
 ;; Import JS libs from package.json
@@ -67,6 +60,15 @@
         :sources (laurascript--helm-libs-source)
         :buffer "*helm buffer source*"))
 
+
+(provide 'laurascript)
+
+;;
+;; compilation warnings
+;;
+
+;; laurascript.el:34:20:Warning: function ‘reduce’ from cl package called at
+;; runtime
 
 
 

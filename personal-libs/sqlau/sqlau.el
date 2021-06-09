@@ -4,9 +4,7 @@
 ;; GNU Public License 3.0
 ;;
 
-;;
-;; sql related functions
-;;
+(message "loading sqlau...")
 
 ;;
 ;; add postgres/mysql dbs to lsp and emacs
@@ -94,3 +92,19 @@
      (throw-if (any-nil? user password host db (quote ,name)) "there are info missing!")
      (add-to-sqls-connections "mysql" (format-mysql-sqls host port user password db))
      (add-to-sql-conection-alist 'mysql ,name host port user password db)))
+
+(provide 'sqlau)
+
+;;
+;; warnings
+;;
+
+;; sqlau.el:16:7:Warning: assignment to free variable ‘lsp-sqls-connections’
+;; sqlau.el:17:7:Warning: assignment to free variable ‘sql-connection-alist’
+
+;; In add-to-sqls-connections:
+;; sqlau.el:35:17:Warning: reference to free variable ‘lsp-sqls-connections’
+;; sqlau.el:35:17:Warning: assignment to free variable ‘lsp-sqls-connections’
+
+
+

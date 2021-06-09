@@ -8,15 +8,9 @@
 ;; slack related functions
 ;;
 
-
-
-
-(eval-after-load "slack"
-  (lambda ()
-    (progn
-      (add-hook 'slack-mode-hook 'emojify-mode)
-      (slack-load-info)
-      )))
+(with-eval-after-load "slack"
+  (add-hook 'slack-mode-hook 'emojify-mode)
+  (load-lib 'slack-private))
 
 
 

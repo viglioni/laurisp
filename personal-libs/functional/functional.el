@@ -4,6 +4,8 @@
 ;; GNU Public License 3.0
 ;;
 
+(message "loading functional...")
+
 ;;
 ;; functional related functions
 ;;
@@ -49,6 +51,7 @@
    a -> ((a -> b) (b -> c) ... (n -> m)) -> m
    e.g.:
    (fp/pipe  5 ((+ 1) (* 2))) -> 12"
+  (declare (indent defun))
   `(funcall (compose ,@(reverse  fn-list)) ,arg))
 
 ;;;###autoload
@@ -186,7 +189,7 @@
 ;;
 ;TODO: test it
 ;;;###autoload
-(defun alist-sort-by-car (alist)
+(defun fp/alist-sort-by-car (alist)
   (sort alist (lambda (a b) (string< (car a) (car b)))))
 
 ;;;###autoload

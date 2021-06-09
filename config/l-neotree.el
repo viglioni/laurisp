@@ -1,6 +1,6 @@
 ;;
 ;; @author Laura Viglioni
-;; 2020
+;; 2020~2021
 ;; GNU Public License 3.0
 ;;
 
@@ -9,14 +9,12 @@
 ;;
 
 
-(eval-after-load "neotree"
-  (lambda ()
-     (progn
-       (setq neo-smart-open t)
-       (setq neo-theme 'icons)
-       (setq projectile-switch-project-action 'neotree-projectile-action)
-       (setq neo-window-fixed-size nil)
-       (load-file (join-path lazy-files-dir "l-lazy-icons-definitions.el"))
-       )))
+(with-eval-after-load "neotree"
+  (setq neo-theme 'icons)
+  (setq neo-window-fixed-size nil))
+
+(with-eval-after-load "all-the-icons"
+  (load-lib 'custom-icons-definitions)
+  (setq all-the-icons-icon-alist custom-icons))
 
 
