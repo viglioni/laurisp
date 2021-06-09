@@ -94,6 +94,7 @@
    (visual-line-mode)
    ;; center buffer
    (olivetti-mode)
+   (setq olivetti-minimum-body-width 100)
    ;; define latex preview colours and scale
    (latex-define-preview-settings)
    ))
