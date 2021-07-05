@@ -80,11 +80,14 @@
 ;;typescript-mode
 ;;
 
+
 (with-eval-after-load "typescript-mode"
+  (load-lib 'ts-repl)
   ;;New prefixes for commands
   (spacemacs/declare-prefix-for-mode 'typescript-mode "me" "errors")
   (spacemacs/declare-prefix-for-mode 'typescript-mode "mf" "format")
   (spacemacs/declare-prefix-for-mode 'typescript-mode "mn" "npm scripts")
+  (spacemacs/declare-prefix-for-mode 'typescript-mode "ms" "repl")
   (spacemacs/set-leader-keys-for-major-mode 'typescript-mode
     ;;format 
     "fo" 'lsp-organize-imports
@@ -102,4 +105,11 @@
     "nr" npm-choose-and-run
     "no" npm-open-active-buffer
     "nh" npm-hide-buffer
+    ;; repl
+    ;; "sc" 'run-ts
+    ;; "se" 'ts-send-last-sexp
+    ;; "sb" 'ts-send-buffer
+    "sb" 'ts-repl-exec-ts-buffer
+    "se" 'ts-repl-send-last-sexp
+    "C-x C-e" 'ts-repl-send-last-sexp
     ))
