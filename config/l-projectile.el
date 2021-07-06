@@ -15,6 +15,7 @@
       (setq projectile-globally-ignored-directories
             '(
               ".cask"
+              ".eldev"
               ".git"
               ".log"
               ".next"
