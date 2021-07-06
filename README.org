@@ -20,7 +20,7 @@
   |---------------------------+-------------------------------------------------------|
   | buttercup-helpers         | Some macros to use in elisp tests                     |
   | functional                | A lib with some common FP functions, like comopse etc |
-  | json-helpers              | Functions related to json handling                    |
+  | json-utils                | Functions related to json handling                    |
   | launguage-server-protocol | Functions about LSP                                   |
   | laurascript               | Functions related to JS/TS                            |
   | laurg                     | Functions related to org-mode                         |
@@ -30,6 +30,7 @@
   | ramda-docs                | Fetches ramda functions by name and link docs         |
   | spotilau                  | Shows a menu with some spotify info                   |
   | sqlau                     | SQL related functions                                 |
+  | ts-repl                   | A "repl" for typescript                               |
   |---------------------------+-------------------------------------------------------|
 
   Only ~functional~, ~core~ and ~config~ are loaded at start. All the other libs will be loaded as they are needed.
