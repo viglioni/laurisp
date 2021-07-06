@@ -24,18 +24,26 @@
 ;;
 
 ;;; Commentary:
-;;  comentary
+;; Not a repl per se.
+;; Executes the file and outputs the result, i.e. console.logs with `ts-repl-exec-ts-buffer'
+;; Executes the buffer and consoles the last sexp `ts-repl-send-last-sexp'
+;; External requires: node with npx command, ts-node
 
 ;;; Code:
 
 (load-lib 'laurisp-core)
 (load-lib 'functional)
 
-(defvar ts-repl--buffer-name "*TS-result*")
+(defvar ts-repl--buffer-name "*TS-result*"
+  "Output buffer of the TS execution")
+
+(defvar ts-repl--error-buffer-name "*TS-erros*"
+  "Output buffer of the TS execution errors")
+
 
 ;;;###autoload
 (defun ts-repl--is-ts? (filename)
-  "Checks if file is a typescript file"
+  "Checks if file is a typescript file: *.ts or .tsx"
   (bool (string-match "\\.tsx?$" filename)))
 
 ;;;###autoload
@@ -44,7 +52,8 @@
 
 
 ;;;###autoload
-(defun ts-repl--console (beginning end)
+(defun ts-repl--wrap-console (beginning end)
+  "Wraps a console.log around region"
   (concat "\nconsole.log("
           (replace-regexp-in-string
            ";$" ""
@@ -54,35 +63,41 @@
 
 ;;;###autoload
 (defun ts-repl--pulse (&optional sexp-beg sexp-end)
+  "Pulses region: sexp region or marked region or the whole buffer"
   (pulse-momentary-highlight-region
    (or sexp-beg (and (use-region-p) (region-beginning)) (point-min))
    (or sexp-end (and (use-region-p) (region-end)) (point-max))))
 
 
 ;;;###autoload
-(defun ts-repl--content (&optional beginning-reg end-reg)
-  (let* ((buffer-content
-          (buffer-substring-no-properties (point-min) (point-max)))
-         (selected-region? (bool (and beginning-reg end-reg)))
-         (region? (bool (or selected-region? (use-region-p))))
-         (beginning (if selected-region? beginning-reg (region-beginning)))
-         (end (if selected-region? end-reg (region-end)))
-         (console-content
-          (if region? (ts-repl--console beginning end) "")))
-
-    (concat buffer-content console-content)))
+(defun ts-repl--content (&optional sexp-beg sexp-end)
+  "Gets the content of the buffer where the function is executed.
+If a sexp region is passed as arg or if a region is selected on buffer,
+it is wrapped by a console.log statement and concatenated to the end"
+  (let* ((buffer-content (buffer-substring-no-properties (point-min) (point-max)))
+         (sexp? (bool (and sexp-beg sexp-end)))
+         (region-to-be-wrapped? (bool (or sexp? (use-region-p))))
+         (beginning (if sexp? sexp-beg (region-beginning)))
+         (end (if sexp? sexp-end (region-end)))
+         (console-wrapped-content (if region-to-be-wrapped?
+                                      (ts-repl--wrap-console beginning end)
+                                    "")))
+    (concat buffer-content console-wrapped-content)))
 
 ;;;###autoload
 (defun ts-repl--run-ts (tmp-file)
+  "Runs the command that will execute the typescript content"
   (async-shell-command
      (concat "echo \"-*-TS-Repl-start-*-\n\n\""
              " && npx ts-node -T " tmp-file
              " && echo \"\n\n-*-TS-Repl-end-*-\"")
-     ts-repl--buffer-name))
+     ts-repl--buffer-name
+     ts-repl--error-buffer-name))
 
 ;;;###autoload
 (defun ts-repl--run-after-ts (tmp-file)
-  "Commands that will run after the TS execution"
+  "Commands that will run after the TS execution:
+adds ts-repl-mode and deletes the temp file"
   (let* ((result-buff (get-buffer ts-repl--buffer-name))
          (proc (get-buffer-process result-buff)))
     (when (process-live-p proc)
@@ -95,6 +110,8 @@
 
 ;;;###autoload
 (defun ts-repl-send-last-sexp ()
+  "Executes buffer without type verification for efficiency reasons
+and consoles the last sexp around the cursor"
   (interactive)
   (let ((beginning (save-excursion
                      (backward-sexp)
