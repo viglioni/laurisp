@@ -59,23 +59,25 @@
   `(require ,lib-name))
 
 ;;;###autoloading
-(defmacro bind-lazy-function (func-name package-name)
-  "Returns an interactive lambda function of a lib that is not imported by default
+(defmacro bind-lazy-function (func-name lib-func-name package-name)
+  "Creates an interactive of a lib that is not imported by default
+   that loads it when is called
    Usage example:
-   (global-set-key (kbd \"M-p M-p\")
-     (bind-lazy-function 'spotify-status 'spotilau))"
-  `(lambda ()
+   (bind-lazy-function 'spotify-func 'spotify-status 'spotilau)
+   (global-set-key (kbd \"M-p M-p\") 'spotify-func)"
+  `(defun ,(eval func-name) ()
      (interactive)
-     (message "loading module...")
      (load-lib ,package-name)
-     (call-interactively ,func-name)))
+     (call-interactively ,lib-func-name)))
+
 
 ;;;###autoload
 (defmacro call-lazy-function (func-name package-name)
   "Calls a function from a lib that is not imported by default"
-  `(call-interactively (bind-lazy-function ,func-name ,package-name)))
+  `(progn
+     (load-lib ,package-name)
+     (call-interactively ,func-name)))
 
-;;;###autoload
 
 ;;
 ;; Importing files
