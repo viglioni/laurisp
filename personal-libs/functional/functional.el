@@ -1,8 +1,28 @@
+;;; functional.el --- Common functional programming functions -*- lexical-binding: t -*-
+
+;; Author: Laura Viglioni <viglionilaura@gmail.com>
+;; URL: https://github.com/Viglioni/laurisp
+;; Keywords: functional programming
+;; Version: 0.0.1
+;; Package-Requires: ((emacs "25.1") (seq "2.21"))
+
+;; This file is NOT part of GNU Emacs.
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
 ;;
-;; @author Laura Viglioni
-;; 2020
-;; GNU Public License 3.0
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
 ;;
+
+;;; Commentary:
+;; A functional lib for emacs including compose, pipe, curry and more.
+
+;;; Code:
 
 (message "loading functional...")
 
@@ -39,7 +59,6 @@
 ;;;###autoload
 (defmacro fp/curry (fn &rest initial-args)
   "Returns the curried function.
-   ((* -> x) arg1, ..., argN) -> ((argN+1, ..., argM) -> x)
    e.g.:
    (fp/curry + 1 2 3) -> (lambda (argN ... argM) (+ 1 2 3 argN ... argM))"
   `(lambda (&rest args)
@@ -197,7 +216,6 @@
   "sort alist by cdr. case insensitive"
   (sort alist (lambda (a b) (string< (downcase (cdr a)) (downcase (cdr b))))))
 
-
-
 (provide 'functional)
 
+;;; functional.el ends here

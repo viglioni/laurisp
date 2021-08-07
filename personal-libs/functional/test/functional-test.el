@@ -1,5 +1,11 @@
-(load "./tests/buttercup-helpers")
-(load "./src/functional.el")
+;;; functional-test.el --- Projectile's test suite -*- lexical-binding: t -*-
+
+
+;;; Code:
+
+(require 'buttercup)
+(load "./test/buttercup-helpers")
+(load "./functional.el")
 
 ;;
 ;; Functions
@@ -13,25 +19,22 @@
                 (* 2 1)) 2 3))
       :to-be 13))
   (context "functions are from seq lib"
+    :var ((test-list '(1 2 3 4 5 6 7 8 9 10))
+          (expected 55))
     (it-should "compose functions correctly and apply args"
-      (let ((test-list '(1 2 3 4 5 6 7 8 9 10))
-            (sum (lambda (lst) (seq-reduce '+ lst 0)))
-            (expected 55))
-        (expect (compose-and-call
-                 ((funcall sum)
-                  (seq-concatenate 'list '(1 2 3 4))
-                  (seq-map (lambda (x) (+ 1 x)))
-                  (seq-filter (lambda (el) (> el 5)))) test-list)
-                :to-be expected))))
+      (expect (compose-and-call
+               ((apply '+)
+                (seq-concatenate 'list '(1 2 3 4))
+                (seq-map (lambda (x) (+ 1 x)))
+                (seq-filter (lambda (el) (> el 5)))) test-list)
+              :to-be expected)))
   (context "functions receive regex params" 
     (it-should "properly compose functions and apply args"
-      (let ((regexp "foo")
-            (str-replace "bar"))
-        (expect (compose-and-call
-                 ((replace-regexp-in-string regexp str-replace))
-                 "foo bar") :to-equal "bar bar")))))
+      (expect (compose-and-call
+               ((replace-regexp-in-string "foo" "bar"))
+               "foo bar") :to-equal "bar bar"))))
 
-(test-suite "#thread-last ->"
+(test-suite "#fp/pipe"
   (it-should "pipe functions in the correct order"
     (expect (fp/pipe 10
                ((+ 1)
