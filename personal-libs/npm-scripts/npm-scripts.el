@@ -9,7 +9,7 @@
 (require 'helm)
 (require 'seq)
 (load-lib 'functional)
-(load-lib 'json-helpers)
+(load-lib 'json-utils)
 
 ;;
 ;; Get scripts from package.json
@@ -45,14 +45,13 @@
 (defun NS--run-script (script-cmd)
   "@param (string) a npm command e.g. \"npm run dev\"
    Runs this script in a dedicated async shell buffer"
-  (let* ((buff-name-base (fp/pipe script-cmd
-                           ((replace-regexp-in-string "npm run " "")
-                            (replace-regexp-in-string " " "-"))))
-         (buff-name (concat "*npm:" buff-name-base "*"))
-         (err-buff-name (concat "*npm-error:" buff-name-base "*"))
+  (let* ((cmd-name (replace-regexp-in-string " " "-"  script-cmd))
+         (buff-name (concat "*:" (projectile-project-name) "::" cmd-name ":*"))
+         (err-buff-name (concat "*:ERROR::" (projectile-project-name) "::" cmd-name ":*"))
          (buff (get-buffer-create buff-name)))
     (NS--open-buffer buff)
-    (async-shell-command script-cmd buff-name err-buff-name)))
+    (async-shell-command script-cmd buff-name err-buff-name)
+    (set-window-dedicated-p (get-buffer-window buff) t)))
 
 ;;;###autoload
 (defun NS--is-npm-buff? (buff-or-buff-name)
@@ -61,18 +60,18 @@
    @returns bool"
   (let ((buff-name (if (stringp buff-or-buff-name) buff-or-buff-name
                      (buffer-name buff-or-buff-name))))
-    (bool (regex-matches (rx "*npm:" (+ (or alphanumeric ":")) "*") buff-name))))
+    (bool (regex-matches (rx (and "*:" (+ (or alphanumeric "-")) "::" (+ (or alphanumeric "-")) ":*")) buff-name))))
 
 ;;;###autoload
-(defun npm-scripts:hide-buffer ()
-   "Hides a buffer with a npm command running.
-    It will hide only if it is on the bottom window and matches the regex"
-  (interactive)
+(defun NS--get-buffer ()
+  "Gets language script buffer, if any, throws otherwise
+   () -> buffer | error"
   (let* ((bottom-window (purpose-get-bottom-window))
          (buff-name (and bottom-window (buffer-name (window-buffer bottom-window))))
          (is-npm-buff? buff-name))
-    (if is-npm-buff? (purpose-delete-window-at-bottom)
-      (message "no npm buffer was found"))))
+    (throw-unless is-npm-buff? "no language script buffer is found")
+    (get-buffer buff-name)))
+
 
 ;;;###autoload
 (defun NS--active-buffers-alist ()
@@ -81,6 +80,22 @@
     ((seq-filter 'NS--is-npm-buff? )
      (mapcar (lambda (buff) (cons (buffer-name buff) buff))))))
 
+;;;###autoload
+(defun npm-scripts:hide-buffer ()
+  "Hides a buffer with a npm command running.
+    It will hide only if it is on the bottom window and matches the regex"
+  (interactive)
+  (NS--get-buffer)
+  (purpose-delete-window-at-bottom))
+
+;;;###autoload
+(defun language-scripts:go-to-buffer ()
+  "Focus on buffer or throws if no buffer is found"
+  (interactive)
+  (fp/pipe (NS--get-buffer)
+    ((get-buffer-window)
+     (select-window)))
+  (goto-char (point-max)))
 
 ;;
 ;; Helm functions
@@ -91,7 +106,7 @@
 ;;;###autoload
 (defun NS--helm-candidates ()
   "Gets the script from package.json and returns an alist (name . command)"
-  (fp/pipe (JH--package-json)
+  (fp/pipe (json-utils-get-package-json)
     ((NS--get-scripts)
      (NS--build-scripts))))
 
