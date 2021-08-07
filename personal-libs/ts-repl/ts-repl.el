@@ -60,14 +60,12 @@
            (buffer-substring beginning end))
           ")\n"))
 
-
 ;;;###autoload
 (defun ts-repl--pulse (&optional sexp-beg sexp-end)
   "Pulses region: sexp region or marked region or the whole buffer"
   (pulse-momentary-highlight-region
    (or sexp-beg (and (use-region-p) (region-beginning)) (point-min))
    (or sexp-end (and (use-region-p) (region-end)) (point-max))))
-
 
 ;;;###autoload
 (defun ts-repl--content (&optional sexp-beg sexp-end)
