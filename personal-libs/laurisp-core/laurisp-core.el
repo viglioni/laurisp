@@ -214,6 +214,12 @@
     t))
 
 ;;;###autoload
+(defun fp/split (separator text)
+  "(str str) -> [str]
+   Split a string using the given separator"
+  (split-string text separator))
+
+;;;###autoload
 ;; (defun relative-path (file1 file2)
 ;;   "TEMPORARIALLY DEPRECATED"
 ;;   (let* ((path1-list (split-string (file-truename file1) "/"))
@@ -230,4 +236,3 @@
 ;;     relative-path))
 
 
-(provide 'laurisp-core)
