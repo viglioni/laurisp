@@ -16,13 +16,10 @@
 
 (setq js-indent-level 2)
 (setq typescript-indent-level 2)
-(setq import-module (bind-lazy-function 'ls-import-js-libs 'laurascript))
-(setq rename-file (bind-lazy-function 'lsp-ts-rename-file 'launguage-server-protocol))
-(setq explain-error-at-point (bind-lazy-function 'lsp-explain-error-at-point 'launguage-server-protocol))
-(setq find-ramda-docs (bind-lazy-function 'open-ramda-docs 'ramda-docs))
-(setq npm-choose-and-run (bind-lazy-function 'npm-scripts:choose-and-run 'npm-scripts))
-(setq npm-open-active-buffer (bind-lazy-function 'npm-scripts:open-active-buffer 'npm-scripts))
-(setq npm-hide-buffer (bind-lazy-function 'npm-scripts:hide-buffer 'npm-scripts))
+(bind-lazy-function 'import-module 'ls-import-js-libs 'laurascript)
+(bind-lazy-function 'rename-this-file 'lsp-ts-rename-file 'launguage-server-protocol)
+(bind-lazy-function 'explain-error-at-point 'lsp-explain-error-at-point 'launguage-server-protocol)
+(bind-lazy-function 'find-ramda-docs 'open-ramda-docs 'ramda-docs)
 
 ;;
 ;; rjsx extra configs
@@ -60,20 +57,20 @@
     "." 'spacemacs/web-transient-state/body
     ;;format
     "fo" 'lsp-organize-imports
-    "fi" import-module
+    "fi" 'import-module
     "f=" 'lsp-format-buffer
     "==" 'lsp-format-buffer
     ;;rename
-    "rf" rename-file
+    "rf" 'rename-this-file
     ;;errors
-    "ep" explain-error-at-point
+    "ep" 'explain-error-at-point
     "en" 'flycheck-next-error
     ;;docs
-    "dr" find-ramda-docs
+    "dr" 'find-ramda-docs
     ;; npm
-    "nr" npm-choose-and-run
-    "no" npm-open-active-buffer
-    "nh" npm-hide-buffer
+    ;; "nr" npm-choose-and-run
+    ;; "no" npm-open-active-buffer
+    ;; "nh" npm-hide-buffer
     ))
 
 ;;
@@ -91,20 +88,20 @@
   (spacemacs/set-leader-keys-for-major-mode 'typescript-mode
     ;;format 
     "fo" 'lsp-organize-imports
-    "fi" import-module
+    "fi" 'import-module
     "f=" 'lsp-format-buffer
     "==" 'lsp-format-buffer
     ;;rename
-    "rf" rename-file
+    "rf" 'rename-this-file
     ;;errors
-    "ep" explain-error-at-point
+    "ep" 'explain-error-at-point
     "en" 'flycheck-next-error
     ;; docs
-    "dr" find-ramda-docs
+    "dr" 'find-ramda-docs
     ;; npm
-    "nr" npm-choose-and-run
-    "no" npm-open-active-buffer
-    "nh" npm-hide-buffer
+    ;; "nr" npm-choose-and-run
+    ;; "no" npm-open-active-buffer
+    ;; "nh" npm-hide-buffer
     ;; repl
     ;; "sc" 'run-ts
     ;; "se" 'ts-send-last-sexp

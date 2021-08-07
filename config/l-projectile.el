@@ -58,7 +58,7 @@
               ))
 
       (setq projectile-project-search-path
-            '("~/Loft/" "~/Personal/"))
+            '("~/Loft/" "~/Personal/"  "~/Loft/webnext/apps"))
 
       )))
 

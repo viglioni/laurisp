@@ -85,3 +85,24 @@
 (global-set-key (kbd "C-c C-<left>") 'shrink-window-horizontally)
 (global-set-key (kbd "C-c C-<up>") 'enlarge-window)
 (global-set-key (kbd "C-c C-<down>") 'shrink-window)
+
+;;
+;; language scripts
+;;
+
+
+(bind-lazy-function 'npm-choose-and-run 'npm-scripts:choose-and-run 'npm-scripts)
+(bind-lazy-function 'hide-script-buffer 'npm-scripts:hide-buffer 'npm-scripts)
+(bind-lazy-function 'open-script-buffer 'npm-scripts:open-active-buffer 'npm-scripts)
+(bind-lazy-function 'go-to-script-buffer 'language-scripts:go-to-buffer 'npm-scripts)
+
+(which-key-add-key-based-replacements "<f17> <f17>" "language scripts")
+;; Common commands
+(which-key-add-key-based-replacements "<f17> <f17> <f17>" "common commands")
+(global-set-key (kbd "<f17> <f17> <f17> h") 'hide-script-buffer)
+(global-set-key (kbd "<f17> <f17> <f17> o") 'open-script-buffer)
+(global-set-key (kbd "<f17> <f17> <f17> g") 'go-to-script-buffer)
+;; NPM scripts
+(which-key-add-key-based-replacements "<f17> <f17> n" "npm scripts")
+(global-set-key (kbd "<f17> <f17> n r") 'npm-choose-and-run)
+
