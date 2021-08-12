@@ -15,9 +15,7 @@
 (defun gen-uuid-to-clipboard ()
   "generates uuid and copies it to clipboard"
   (interactive)
-  (let ((uuid (replace-regexp-in-string
-               "\n" ""
-               (shell-command-to-string "uuidgen | tr '[:upper:]' '[:lower:]' "))))
+  (let ((uuid (uuidgen-4)))
     (kill-new uuid)
     (message (format "copied %s to clipboard" uuid))
     uuid))
@@ -26,7 +24,7 @@
 (defun insert-uuid ()
   "inserts random uuid"
   (interactive)
-  (insert (gen-uuid-to-clipboard))) 
+  (insert (uuidgen-4))) 
 
 ;;;###autoload
 (defun lpwd (&optional dir)
