@@ -13,14 +13,14 @@
    Executes these functions using ~:post~ to format the output of codeblocks.
 *** Haskell
     #+name: org-babel-haskell-formatter
-    #+begin_src emacs-lisp :var strr="" :exports none
+    #+begin_src emacs-lisp :var strr="" :exports code
       (format "%s" (replace-regexp-in-string
                     (rx line-start (+ (| alphanumeric "." blank)) (and ">" (+ blank)))
                     "" (format "%s" strr)))
     #+end_src
 *** Clojure
     #+name: org-babel-clojure-formatter
-    #+begin_src emacs-lisp :var strr="" :exports none
+    #+begin_src emacs-lisp :var strr="" :exports code
       (format "%s" (replace-regexp-in-string
                     (rx line-start (+ (| alphanumeric "." blank)) (and ">" (+ blank)))
                     "" (format "%s" strr)))
