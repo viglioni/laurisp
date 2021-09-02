@@ -21,20 +21,12 @@
 (create-skeleton org-haskell-notebook-header
   "header for haskell notebooks"
   "#+Title:"
-  "#+startup: fold"
-  "#+name: org-clear-haskell-output"
-  "#+begin_src emacs-lisp :var strr=\"\" :exports none"
-  "(format \"%s\" (replace-regexp-in-string (rx (and (| \"*Main\" \"Prelude\") (? \"|\") (? white) (? \">\") (? white))) \"\" (format \"%s\" strr)))"
-  "#+end_src")
+  "#+startup: fold")
 
 (create-skeleton org-clojure-notebook-header
   "header for clojure notebooks"
   "#+Title:"
-  "#+startup: fold"
-  "#+name: org-clear-clojure-output"
-  "#+begin_src emacs-lisp :var strr=\"\" :exports none"
-  "(replace-regexp-in-string (rx (| (and \"(#'user\" (+ (not \")\")) \")\" (+ white)) (and line-start \"(\") (and \")\" line-end))) \"\" (format \"%s\" strr))"
-  "#+end_src")
+  "#+startup: fold")
 
 
 (create-skeleton org-beamer-presentations-header
@@ -64,6 +56,8 @@
   "#+EXCLUDE_TAGS: noexport"
   "#+latex_class: article"
   "#+latex_class_options: [a4paper,12pt]")
+
+
 
 (provide 'org-headers-skeletons)
 

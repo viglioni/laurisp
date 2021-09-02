@@ -47,16 +47,16 @@
 ;;
 
 ;;;###autoload
-(defun --org-insert-src (src-name &optional post-func)
+(defun laurg--org-insert-src (src-name &optional post-func)
   (let ((post (if post-func (concat ":post " post-func "(*this*)") "")))
     (insert (concat "#+begin_src " src-name " :exports both " post "\n\n" "#+end_src"))))
 
 ;;;###autoload
 (defun org-insert-src (src-name)
   (cond
-   ((string= "haskell" src-name) (--org-insert-src src-name "org-clear-haskell-output") )
-   ((string= "clojure" src-name) (--org-insert-src src-name "org-clear-clojure-output") )
-   (t (--org-insert-src src-name))))
+   ((string= "haskell" src-name) (laurg--org-insert-src src-name "org-babel-haskell-formatter"))
+   ((string= "clojure" src-name) (laurg--org-insert-src src-name "org-babel-clojure-formatter"))
+   (t (laurg--org-insert-src src-name))))
 
 (setq helm-org-sources
       (helm-build-sync-source "Language name"

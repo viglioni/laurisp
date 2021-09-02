@@ -32,6 +32,10 @@
      ("\\subsection{%s}" . "\\subsection*{%s}")
      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 
+(with-eval-after-load "ob-lob"
+  ;; load extra configs to org mode
+  (org-babel-lob-ingest "./org-mode-extra-configs.org"))
+
 (with-eval-after-load "org"
   (load-lib 'laurg)
   (load-lib 'lautex)
