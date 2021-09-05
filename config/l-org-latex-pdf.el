@@ -32,13 +32,18 @@
      ("\\subsection{%s}" . "\\subsection*{%s}")
      ("\\subsubsection{%s}" . "\\subsubsection*{%s}"))))
 
-(with-eval-after-load "ob-lob"
-  ;; load extra configs to org mode
-  (org-babel-lob-ingest "./org-mode-extra-configs.org"))
+
+(setq haskell-process-type 'stack-ghci)
 
 (with-eval-after-load "org"
   (load-lib 'laurg)
   (load-lib 'lautex)
+
+  ;; load extra configs to org mode
+  (org-babel-lob-ingest (join-path
+                         laurisp-config-dir
+                         "org-mode-extra-configs.org"))
+
   ;; add languages to list
   (org-babel-do-load-languages
    'org-babel-load-languages

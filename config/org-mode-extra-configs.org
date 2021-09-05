@@ -2,7 +2,7 @@
 #+author: Laura Viglioni
 
 
-*This file is GLP-3.0*
+*This file is GPL-3.0*
 
 
 * About
@@ -15,9 +15,13 @@
     #+name: org-babel-haskell-formatter
     #+begin_src emacs-lisp :var strr="" :exports code
       (format "%s" (replace-regexp-in-string
-                    (rx line-start (+ (| alphanumeric "." blank)) (and ">" (+ blank)))
+                    (rx line-start
+                        (+ (| alphanumeric blank "." "|" ">")))
                     "" (format "%s" strr)))
     #+end_src
+
+    #+RESULTS: org-babel-haskell-formatter
+
 *** Clojure
     #+name: org-babel-clojure-formatter
     #+begin_src emacs-lisp :var strr="" :exports code
