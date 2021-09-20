@@ -13,6 +13,10 @@
 ;; LSP
 ;;
 
+(setq lsp-idle-delay 0.5)
+(setq gc-cons-threshold 200000000)
+(setq lsp-auto-guess-root t)
+
 ;; (advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
 
 ;; (advice-remove #'lsp #'(lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
