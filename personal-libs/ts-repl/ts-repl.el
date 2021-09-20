@@ -88,7 +88,9 @@ it is wrapped by a console.log statement and concatenated to the end"
   (async-shell-command
      (concat "echo \"-*-TS-Repl-start-*-\n\n\""
              " && npx ts-node -T " tmp-file
-             " && echo \"\n\n-*-TS-Repl-end-*-\"")
+             " && echo \"\n\""
+             " || echo \"\n\n-*-An error has occurred-*-\""
+             " && echo \"-*-TS-Repl-end-*-\"")
      ts-repl--buffer-name
      ts-repl--error-buffer-name))
 
