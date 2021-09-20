@@ -90,15 +90,21 @@
 (global-set-key (kbd "C-c C-<up>") 'enlarge-window)
 (global-set-key (kbd "C-c C-<down>") 'shrink-window)
 
+
+
+
 ;;
 ;; language scripts
 ;;
 
-
 (bind-lazy-function 'npm-choose-and-run 'npm-scripts:choose-and-run 'npm-scripts)
-(bind-lazy-function 'hide-script-buffer 'npm-scripts:hide-buffer 'npm-scripts)
-(bind-lazy-function 'open-script-buffer 'npm-scripts:open-active-buffer 'npm-scripts)
-(bind-lazy-function 'go-to-script-buffer 'language-scripts:go-to-buffer 'npm-scripts)
+(bind-lazy-function 'hide-script-buffer 'lang-scripts:hide-buffer 'lang-scripts)
+(bind-lazy-function 'open-script-buffer 'lang-scripts:open-active-buffer 'lang-scripts)
+(bind-lazy-function 'go-to-script-buffer 'lang-scripts:go-to-buffer 'lang-scripts)
+(bind-lazy-function 'import-default-lib 'npm-scripts:import-default-lib 'npm-scripts)
+(bind-lazy-function 'npm-install-lib 'npm-scripts:install 'npm-scripts)
+(bind-lazy-function 'npm-install-dev-lib 'npm-scripts:install-dev 'npm-scripts)
+(bind-lazy-function 'run-make-cmd 'make-scripts:run-command 'make-scripts)
 
 (which-key-add-key-based-replacements "<f17> <f17>" "language scripts")
 ;; Common commands
