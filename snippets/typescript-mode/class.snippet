@@ -5,8 +5,11 @@
 # author: Laura Viglioni
 # --
 
-class ${1:ClassName} ${2:extends ${3: ClassParent}} {
-      ${4:public constructor($5) {$6\}}
+${1:export }class ${2:ClassName} ${3:extends/implements Something$$(yas-choose-value '(" " "extends " "implements ")) }{
+      ${4:public constructor($5) {
+                 ${6:super($7)}
+                 $8
+                 \}}
       $0
 }
 
