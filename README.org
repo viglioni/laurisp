@@ -15,33 +15,33 @@
   |----------------+-----------------------------------------------------------|
 
   External libs:
-  |---------------------------+-------------------------------------------------------|
-  | Lib name                  | Brief description                                     |
-  |---------------------------+-------------------------------------------------------|
-  | buttercup-helpers         | Some macros to use in elisp tests                     |
-  | functional                | A lib with some common FP functions, like comopse etc |
-  | json-utils                | Functions related to json handling                    |
-  | launguage-server-protocol | Functions about LSP                                   |
-  | laurascript               | Functions related to JS/TS                            |
-  | laurg                     | Functions related to org-mode                         |
-  | laurisp-core              | My core functions that I use in my other libs         |
-  | lautex                    | Functions related to LaTeX (and org-mode)             |
-  | npm-scripts               | Functions to run scripts defined in the package.json  |
-  | ramda-docs                | Fetches ramda functions by name and link docs         |
-  | spotilau                  | Shows a menu with some spotify info                   |
-  | sqlau                     | SQL related functions                                 |
-  | ts-repl                   | A "repl" for typescript                               |
-  |---------------------------+-------------------------------------------------------|
+  |---------------------------+--------------------------------------------------------------|
+  | Lib name                  | Brief description                                            |
+  |---------------------------+--------------------------------------------------------------|
+  | buttercup-helpers         | Some macros to use in elisp tests                            |
+  | functional                | A lib with some common FP functions, like comopse etc        |
+  | json-utils                | Functions related to json handling                           |
+  | lang-scripts              | Base lib to run scripts on dedicated buff (e.g. npm-scripts) |
+  | launguage-server-protocol | Functions about LSP                                          |
+  | laurg                     | Functions related to org-mode                                |
+  | laurisp-core              | My core functions that I use in my other libs                |
+  | lautex                    | Functions related to LaTeX (and org-mode)                    |
+  | npm-scripts               | Functions to run scripts defined in the package.json         |
+  | ramda-docs                | Fetches ramda functions by name and link docs                |
+  | spotilau                  | Shows a menu with some spotify info                          |
+  | sqlau                     | SQL related functions                                        |
+  | ts-repl                   | A "repl" for typescript                                      |
+  |---------------------------+--------------------------------------------------------------|
 
   Only ~functional~, ~core~ and ~config~ are loaded at start. All the other libs will be loaded as they are needed.
 
   The ~config~ files assume the existence of three private files not shown in this repo:
-  ```shell
+#+begin_src shell :exports both 
   ~/private-files/emacs-files/env-private.el
   ~/private-files/emacs-files/sql-private.el
   ~/private-files/emacs-files/slack-private.el
-  ```
   
+  #+end_src  
 * Testing
   To run tests we use [[https://github.com/jorgenschaefer/emacs-buttercup/][buttercup]] and [[https://github.com/cask/cask][cask]].
 
