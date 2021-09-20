@@ -16,11 +16,34 @@
     #+begin_src emacs-lisp :var strr="" :exports code
       (format "%s" (replace-regexp-in-string
                     (rx line-start
-                        (+ (| alphanumeric blank "." "|" ">")))
+                        (and (* (|  alphanumeric "|" ">" blank))
+                             (and (* blank) (+ alphanumeric) (| "|" ">"))))
                     "" (format "%s" strr)))
     #+end_src
 
     #+RESULTS: org-babel-haskell-formatter
+
+**** testing
+     #+begin_src emacs-lisp :exports both :post org-babel-haskell-formatter(*this*)
+       "Prelude> Prelude| Prelude| Prelude| Prelude| Prelude| Prelude| Prelude| Prelude| Prelude| Prelude| Prelude| Prelude> Prelude> 1.0 + 2.0i"
+#+end_src
+
+#+RESULTS:
+:  1.0 + 2.0i
+
+     #+begin_src emacs-lisp :exports both :post org-babel-haskell-formatter(*this*)
+       "Prelude> 1.0 - 2.0i"
+#+end_src
+
+#+RESULTS:
+:  1.0 - 2.0i
+
+     #+begin_src emacs-lisp :exports both :post org-babel-haskell-formatter(*this*)
+       "Prelude| Prelude| Prelude| Prelude| Prelude| Prelude| [1.0 + 0.0i,0.5 + 0.0i,0.5 + 0.5i]"
+#+end_src
+
+#+RESULTS:
+:  [1.0 + 0.0i,0.5 + 0.0i,0.5 + 0.5i]
 
 *** Clojure
     #+name: org-babel-clojure-formatter
@@ -29,4 +52,6 @@
                     (rx line-start (+ (| alphanumeric "." blank)) (and ">" (+ blank)))
                     "" (format "%s" strr)))
     #+end_src
+
+    #+RESULTS: org-babel-clojure-formatter
 
