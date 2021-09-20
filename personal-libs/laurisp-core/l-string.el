@@ -71,6 +71,15 @@
     (goto-char return-pos)
     t))
 
+(defun fp/insert-on-fst-empty-line (text)
+  "inserts text on the first empty line of the buffer and
+    return the cursor to its position"
+  (throw-unless (bool text) "text is nil")
+  (save-excursion
+    (go-to-fst-empty-line)
+    (insert (concat text "\n"))))
+
+
 ;;;###autoload
 (defun fp/split (separator text)
   "(str str) -> [str]
@@ -78,19 +87,8 @@
   (split-string text separator))
 
 ;;;###autoload
-;; (defun relative-path (file1 file2)
-;;   "TEMPORARIALLY DEPRECATED"
-;;   (let* ((path1-list (split-string (file-truename file1) "/"))
-;;          (path2-list (split-string (file-truename file2) "/"))
-;;          (zipped-path (zip path1-list path2-list))
-;;          (diff-path (seq-filter (lambda (pair) "" (not (equal (head pair) (head (tail pair)))))  zipped-path))
-;;          (unzipped (unzip diff-path))
-;;          (pre-path1  (nbutlast (seq-filter #'bool (head unzipped)) 1))
-;;          (pre-path2  (seq-filter #'bool (head (tail unzipped))))
-;;          (path1 (concat "./" (s-join "/" (seq-map (lambda (el) "" "..") pre-path1))))
-;;          (filename (head (last pre-path2)))
-;;          (path2 (concat (s-join "/" pre-path2)))
-;;          (relative-path (join-path path1 path2)))
-;;     relative-path))
+(defun fp/is-empty? (obj)
+  "returns if list or string is empty
+   (list | str) -> bool"
+  (or (equal "" obj) (equal nil obj)))
 
-(provide 'l-string)

@@ -17,7 +17,6 @@
   "if condition is true, thrown an error"
   `(unless ,condition (error (or ,error-description ""))))
 
-
 ;;
 ;; @author Laura Viglioni
 ;; 2021
@@ -37,21 +36,13 @@
          (files (directory-files "." t "^l-[a-z\\-].*\\.el$"))
          (content (fp/pipe files
                      ((mapcar 'get-string-from-file)
-                      (string-join)
-                      (replace-regexp-in-string "(provide '[a-z\-]+)" "")))))
+                      (string-join)))))
     (with-temp-buffer
       (insert content)
-      (insert "")
+      (insert "\n\n(provide 'laurisp-core)\n")
       (write-file filename))
     (byte-compile-file filename)))
 
-;;;###autoload
-;; (defun recompile-laurisp ()
-;;   (interactive)
-;;   (seq-do
-;;    (lambda (dir)
-;;      (byte-recompile-directory (concat "~/laurisp/" dir) 0 t))
-;;    ["lazy-files" "lazy-funcs" "personal-libs" "core" "external"]))
 
 ;;
 ;; @author Laura Viglioni
@@ -70,9 +61,7 @@
 (defun gen-uuid-to-clipboard ()
   "generates uuid and copies it to clipboard"
   (interactive)
-  (let ((uuid (replace-regexp-in-string
-               "\n" ""
-               (shell-command-to-string "uuidgen | tr '[:upper:]' '[:lower:]' "))))
+  (let ((uuid (uuidgen-4)))
     (kill-new uuid)
     (message (format "copied %s to clipboard" uuid))
     uuid))
@@ -81,7 +70,7 @@
 (defun insert-uuid ()
   "inserts random uuid"
   (interactive)
-  (insert (gen-uuid-to-clipboard))) 
+  (insert (uuidgen-4))) 
 
 ;;;###autoload
 (defun lpwd (&optional dir)
@@ -135,7 +124,6 @@
          (files (directory-files-recursively "~/laurisp" files-regexp t))
          (lines (mapcar 'count-non-empty-lines files)))
     (print (apply '+ lines))))
-
 
 
 
@@ -213,6 +201,15 @@
     (goto-char return-pos)
     t))
 
+(defun fp/insert-on-fst-empty-line (text)
+  "inserts text on the first empty line of the buffer and
+    return the cursor to its position"
+  (throw-unless (bool text) "text is nil")
+  (save-excursion
+    (go-to-fst-empty-line)
+    (insert (concat text "\n"))))
+
+
 ;;;###autoload
 (defun fp/split (separator text)
   "(str str) -> [str]
@@ -220,19 +217,11 @@
   (split-string text separator))
 
 ;;;###autoload
-;; (defun relative-path (file1 file2)
-;;   "TEMPORARIALLY DEPRECATED"
-;;   (let* ((path1-list (split-string (file-truename file1) "/"))
-;;          (path2-list (split-string (file-truename file2) "/"))
-;;          (zipped-path (zip path1-list path2-list))
-;;          (diff-path (seq-filter (lambda (pair) "" (not (equal (head pair) (head (tail pair)))))  zipped-path))
-;;          (unzipped (unzip diff-path))
-;;          (pre-path1  (nbutlast (seq-filter #'bool (head unzipped)) 1))
-;;          (pre-path2  (seq-filter #'bool (head (tail unzipped))))
-;;          (path1 (concat "./" (s-join "/" (seq-map (lambda (el) "" "..") pre-path1))))
-;;          (filename (head (last pre-path2)))
-;;          (path2 (concat (s-join "/" pre-path2)))
-;;          (relative-path (join-path path1 path2)))
-;;     relative-path))
+(defun fp/is-empty? (obj)
+  "returns if list or string is empty
+   (list | str) -> bool"
+  (or (equal "" obj) (equal nil obj)))
 
 
+
+(provide 'laurisp-core)

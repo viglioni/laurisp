@@ -17,4 +17,3 @@
   "if condition is true, thrown an error"
   `(unless ,condition (error (or ,error-description ""))))
 
-(provide 'l-general)

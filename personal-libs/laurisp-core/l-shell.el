@@ -79,7 +79,6 @@
          (lines (mapcar 'count-non-empty-lines files)))
     (print (apply '+ lines))))
 
-(provide 'l-shell)
 
 
 
