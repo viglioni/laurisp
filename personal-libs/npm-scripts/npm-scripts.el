@@ -10,9 +10,28 @@
 (require 'seq)
 (load-lib 'functional)
 (load-lib 'json-utils)
+(load-lib 'lang-scripts)
 
 ;;
-;; Get scripts from package.json
+;; Vars and common funcs
+;;
+
+(defvar NS--default-import-allowed-modes
+  '(typescript-mode typescript-tsx-mode js2-mode rjsx-mode js-mode web-mode))
+
+;;;###autoload
+(defun NS--allowed-mode? ()
+  "Checks if current mode is allowed based on `NS--default-import-allowed-modes'"
+  (contains? NS--default-import-allowed-modes major-mode))
+
+;;;###autoload
+(defun NS--has-package-json? ()
+  "Returns if there is a package.json in the project root dir
+   () -> bool"
+  (file-exists-p (join-path (projectile-project-root) "package.json")))
+
+;;
+;; NPM choose and run
 ;;
 
 ;;;###autoload
@@ -33,75 +52,6 @@
                             (format "npm run %s" script)))
           scripts-list))
 
-;;
-;; Build shell buffer to run the script
-;;
-
-;;;###autoload
-(defun NS--open-buffer (buff)
-  (display-buffer-in-side-window buff '((side . bottom))))
-
-;;;###autoload
-(defun NS--run-script (script-cmd)
-  "@param (string) a npm command e.g. \"npm run dev\"
-   Runs this script in a dedicated async shell buffer"
-  (let* ((cmd-name (replace-regexp-in-string " " "-"  script-cmd))
-         (buff-name (concat "*:" (projectile-project-name) "::" cmd-name ":*"))
-         (err-buff-name (concat "*:ERROR::" (projectile-project-name) "::" cmd-name ":*"))
-         (buff (get-buffer-create buff-name)))
-    (NS--open-buffer buff)
-    (async-shell-command script-cmd buff-name err-buff-name)
-    (set-window-dedicated-p (get-buffer-window buff) t)))
-
-;;;###autoload
-(defun NS--is-npm-buff? (buff-or-buff-name)
-  "Checks if a buffer name matches the regex of this lib created buffers
-   @param (string | buffer)
-   @returns bool"
-  (let ((buff-name (if (stringp buff-or-buff-name) buff-or-buff-name
-                     (buffer-name buff-or-buff-name))))
-    (bool (regex-matches (rx (and "*:" (+ (or alphanumeric "-")) "::" (+ (or alphanumeric "-")) ":*")) buff-name))))
-
-;;;###autoload
-(defun NS--get-buffer ()
-  "Gets language script buffer, if any, throws otherwise
-   () -> buffer | error"
-  (let* ((bottom-window (purpose-get-bottom-window))
-         (buff-name (and bottom-window (buffer-name (window-buffer bottom-window))))
-         (is-npm-buff? buff-name))
-    (throw-unless is-npm-buff? "no language script buffer is found")
-    (get-buffer buff-name)))
-
-
-;;;###autoload
-(defun NS--active-buffers-alist ()
-  "@returns an alist (buffer-name . buffer)"
-  (fp/pipe (buffer-list)
-    ((seq-filter 'NS--is-npm-buff? )
-     (mapcar (lambda (buff) (cons (buffer-name buff) buff))))))
-
-;;;###autoload
-(defun npm-scripts:hide-buffer ()
-  "Hides a buffer with a npm command running.
-    It will hide only if it is on the bottom window and matches the regex"
-  (interactive)
-  (NS--get-buffer)
-  (purpose-delete-window-at-bottom))
-
-;;;###autoload
-(defun language-scripts:go-to-buffer ()
-  "Focus on buffer or throws if no buffer is found"
-  (interactive)
-  (fp/pipe (NS--get-buffer)
-    ((get-buffer-window)
-     (select-window)))
-  (goto-char (point-max)))
-
-;;
-;; Helm functions
-;;
-
-;; npm-scripts:choose-and-run
 
 ;;;###autoload
 (defun NS--helm-candidates ()
@@ -116,7 +66,10 @@
     :volatile t
     :multiline nil
     :candidates (NS--helm-candidates)
-    :action 'NS--run-script))
+    :action 'lang-scripts:run-script))
+
+
+;; API
 
 ;;;###autoload
 (defun npm-scripts:choose-and-run ()
@@ -126,21 +79,73 @@
         :sources (NS--helm-scripts-source)
         :buffer "*helm avaliable npm scripts*"))
 
-;; npm-scripts:open-active-buffer
+;;
+;; Install packages
+;;
 
-(defun NS--helm-buffer-source ()
-  (helm-build-sync-source "Active npm buffers: "
-    :volatile t
-    :multiline nil
-    :candidates (NS--active-buffers-alist)
-    :action 'NS--open-buffer))
+;;;###autoload
+(defun npm-scripts:install (package-name)
+  (interactive "sInsert package name or just hit enter to run \"npm i\": ")
+  (throw-unless (NS--has-package-json?) "No package.json was found!")
+  (lang-scripts:run-script (concat "npm install " package-name)))
 
-(defun npm-scripts:open-active-buffer ()
-  "Lists all active npm buffers and opens the selected one"
+;;;###autoload
+(defun npm-scripts:install-dev (package-name)
+  (interactive "sInsert package name: ")
+  (throw-unless (NS--has-package-json?) "No package.json was found!")
+  (throw-if (fp/is-empty? package-name) "package name can't be empty")
+  (lang-scripts:run-script (concat "npm install -D " package-name)))
+
+
+;;
+;; Import default
+;;
+
+(defvar NS--default-import-lib-list
+  '(("fp-ts/Array" . "A")
+    ("fp-ts/Either" . "E")
+    ("fp-ts/IO" . "IO")
+    ("fp-ts/IOEither" . "IOE" )
+    ("fp-ts/TaskEither" . "TE")
+    ("fp-ts/Task" . "T")
+    ("io-ts/Decoder" . "D")
+    ("ramda" . "R")
+    ("lodash/fp" . "_")
+    ("rxjs/operators" . "rx")))
+
+(setq NS--default-import-candidates
+  (mapcar (lambda (c) (cons (car c) c)) NS--default-import-lib-list))
+
+;;;###autoload
+(defun NS--add-import-to-file (candidate)
+  (let ((import-as (cdr candidate))
+        (lib-name (car candidate)))
+    (fp/insert-on-fst-empty-line
+     (format "import * as %s from '%s'" import-as lib-name))))
+
+;;;###autoload
+(defun NS--default-import-helm-src ()
+  (helm-build-sync-source "Default import: "
+    :candidates 'NS--default-import-candidates
+    :action 'NS--add-import-to-file))
+
+
+;; API
+
+;;;###autoload
+(defun npm-scripts:import-default-lib ()
+  "Add to the first empty line of the code an default js/ts import
+  e.g.: import * as E from 'fp-ts/Either'
+  according to the assoc list `NS--default-import-lib-list'.
+  Will only add if the current buffer is in one of the modes listed in
+  `NS--default-import-allowed-modes'"
   (interactive)
-  (helm :promp "Choose a buffer to open: "
-        :buffer "*helm active npm buffers*"
-        :sources (NS--helm-buffer-source)))
+  (throw-unless (NS--allowed-mode?)"Not in a js/ts mode!")
+  (helm
+   :prompt "Choose lib to import default: "
+   :sources (NS--default-import-helm-src)))
+
+
 
 (provide 'npm-scripts)
 

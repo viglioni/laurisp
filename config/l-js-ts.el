@@ -16,7 +16,7 @@
 
 (setq js-indent-level 2)
 (setq typescript-indent-level 2)
-(bind-lazy-function 'import-module 'ls-import-js-libs 'laurascript)
+
 (bind-lazy-function 'rename-this-file 'lsp-ts-rename-file 'launguage-server-protocol)
 (bind-lazy-function 'explain-error-at-point 'lsp-explain-error-at-point 'launguage-server-protocol)
 (bind-lazy-function 'find-ramda-docs 'open-ramda-docs 'ramda-docs)
@@ -27,7 +27,6 @@
 
 (add-to-list 'auto-mode-alist '("\\.js.*$" . rjsx-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
-
 
 ;;
 ;; web-mode
@@ -57,7 +56,6 @@
     "." 'spacemacs/web-transient-state/body
     ;;format
     "fo" 'lsp-organize-imports
-    "fi" 'import-module
     "f=" 'lsp-format-buffer
     "==" 'lsp-format-buffer
     ;;rename
@@ -88,7 +86,6 @@
   (spacemacs/set-leader-keys-for-major-mode 'typescript-mode
     ;;format 
     "fo" 'lsp-organize-imports
-    "fi" 'import-module
     "f=" 'lsp-format-buffer
     "==" 'lsp-format-buffer
     ;;rename

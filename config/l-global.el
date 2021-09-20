@@ -105,4 +105,10 @@
 ;; NPM scripts
 (which-key-add-key-based-replacements "<f17> <f17> n" "npm scripts")
 (global-set-key (kbd "<f17> <f17> n r") 'npm-choose-and-run)
-
+(global-set-key (kbd "<f17> <f17> n i") 'import-default-lib)
+(global-set-key (kbd "<f17> <f17> n l") 'npm-install-lib)
+(global-set-key (kbd "<f17> <f17> n d") 'npm-install-dev-lib)
+;; MAKE scripts
+(which-key-add-key-based-replacements "<f17> <f17> m" "makefile scripts")
+(global-set-key (kbd "<f17> <f17> m r") 'run-make-cmd)
+ 
