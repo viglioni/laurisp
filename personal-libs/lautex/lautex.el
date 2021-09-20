@@ -15,28 +15,16 @@
 ;; latex preview
 ;;
 
-;;;###autoload
-(defun latex-define-preview-settings (&optional img-scale)
-  "Define latex format options using the theme"
-  (interactive)
-  (let* ((foreground-color (face-attribute 'default :foreground))
-         (background-color (face-attribute 'default :background))
-         (text-scale (float (if (boundp 'text-scale-mode-amount) text-scale-mode-amount 0)))
-         (minimum-scale (or img-scale 13))
-         (scale (/  (float (+ minimum-scale text-scale)) 10)))
-    (plist-put org-format-latex-options :scale scale)
-    (plist-put org-format-latex-options :foreground foreground-color)
-    (plist-put org-format-latex-options :background background-color)))
 
 ;;;###autoload
-(defun preview-latex-on-buffer ()
+(defun LauTeX-preview-latex-on-buffer ()
   (interactive)
   (latex-define-preview-settings)
   (org-clear-latex-preview)
   (org-latex-preview '(16)))
 
 ;;;###autoload
-(defun preview-latex-on-section ()
+(defun LauTeX-preview-latex-on-section ()
   (interactive)
   (latex-define-preview-settings)
   (org-latex-preview '(4))
@@ -48,7 +36,7 @@
 ;;
 
 ;;;###autoload
-(defun compile-org-to-pdf ()
+(defun LauTex-compile-org-to-pdf ()
   (interactive)
   (if (and (boundp 'org-beamer-mode) org-beamer-mode)
       (org-beamer-export-to-pdf)
@@ -175,8 +163,6 @@
       (insert (concat label-type " "))))
   (lautex--insert-command "ref" label))
 
-(setq mock-org "/Users/laura.viglioni/Personal/mestrado/eqm-text/eqm.org")
-
 ;;;###autoload
 (defun lautex--label-type (label)
   (let* ((org-label (replace-regexp-in-string ":CUSTOM_ID: " "" label))
@@ -199,7 +185,6 @@
     (cons full-description label)))
 
 
-
 ;;;###autoload
 (defun lautex--reference-candidates ()
   "Get all labels from a org/latex file"
@@ -208,8 +193,6 @@
                                         (and ":CUSTOM_ID:" (? space) (* nonl))))
                                  text)))
     (seq-map 'lautex--build-reference-candidate matches)))
-
-
 
 ;;;###autoload
 (defun lautex--helm-label-source ()

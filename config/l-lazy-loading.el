@@ -26,22 +26,12 @@
   (yas-global-mode 1)
   (message "running exec path from shell...")
   (exec-path-from-shell-initialize)
-  (load-lib 'laurascript)
   (load-lib 'launguage-server-protocol)
   (load-lib 'sqlau)
   (message "emacs IDE is ready"))
 
 (spacemacs/set-leader-keys
   "@" 'prepare-ide)
-
-;;
-;; lautex
-;;
-
-;;;###autoload
-(defun latex-define-preview-settings ()
-  (interactive)
-  (call-lazy-function 'latex-define-preview-settings 'lautex))
 
 
 
@@ -50,20 +40,7 @@
 ;;
 
 ;;;###autoload
-(defun org-insert-custom-headers ()
-  (interactive)
-  (call-lazy-function 'org-insert-custom-headers 'laurg))
-
-;;;###autoload
-(defun insert-org-source ()
-  (interactive)
-  (call-lazy-function 'insert-org-source 'laurg))
-
-;;;###autoload
-(defun org-jira-copy-current-issue-url ()
-  (interactive)
-  (call-lazy-function 'org-jira-copy-current-issue-url 'laurg))
-
+(bind-lazy-function 'org-jira-copy-current-issue-url 'laurg-jira-copy-current-issue-url 'laurg)
 
 ;;
 ;; ramda docs
